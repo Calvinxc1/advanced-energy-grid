@@ -1,0 +1,10 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+Date: 2026.07.05
+  Changes
+    - Initialized Advanced Energy Grid as the electric-grid split from Advanced Power Infrastructure.
+    - Added upgraded small, medium, and big electric pole tiers with aeg_ prototype IDs.
+    - Added upgraded substation tiers and local distribution technology branches.
+    - Added distance transmission technology branches.
+    - Added optional Power Overload huge electric pole MK2-MK4 integration.
+    - Registered AEG electric poles with Power Overload when its external pole registry API is available.
