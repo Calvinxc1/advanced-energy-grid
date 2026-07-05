@@ -1,0 +1,11 @@
+canonical_agent_name: Advanced Energy Grid Factorio Modding Agent
+agent_kind: coding_agent
+active_governance_branch: coding-agent
+active_canon_version: coding-agent/1.1.0
+generalized_canon_version: trunk/2.8.0
+canon_version_log_ref: canon-version-log/versions.yaml
+provenance_commit: 91496becadc8eed3dc9b04469c2d7082b47cdb43
+source_repository_or_path: /home/jcherry/Documents/git/ai-projects/ai-governance
+self_stamp_timestamp: 2026-07-05T15:00:17Z
+agent_declared_status: unknown_registry_row
+notes: Local governance initialized from the coding-agent branch after Jason confirmed the canonical name and kind. No central registry row was present at initialization.
