@@ -3,19 +3,19 @@ if mods["PowerOverload"] then
 
   if ok and PowerOverload and PowerOverload.register_pole then
     local poles = {
-      { name = "aeg_small-electric-pole-2", default = "24MW" },
-      { name = "aeg_medium-electric-pole-2", default = "110MW" },
-      { name = "aeg_medium-electric-pole-3", default = "120MW" },
-      { name = "aeg_medium-electric-pole-4", default = "130MW" },
-      { name = "aeg_big-electric-pole-2", default = "550MW" },
-      { name = "aeg_big-electric-pole-3", default = "600MW" },
-      { name = "aeg_big-electric-pole-4", default = "650MW" },
+      { name = "aeg_small-electric-pole-2", default = "12MW" },
+      { name = "aeg_medium-electric-pole-2", default = "72MW" },
+      { name = "aeg_medium-electric-pole-3", default = "84MW" },
+      { name = "aeg_medium-electric-pole-4", default = "96MW" },
+      { name = "aeg_big-electric-pole-2", default = "360MW" },
+      { name = "aeg_big-electric-pole-3", default = "420MW" },
+      { name = "aeg_big-electric-pole-4", default = "480MW" },
       { name = "aeg_substation-2", default = "150MW" },
       { name = "aeg_substation-3", default = "175MW" },
       { name = "aeg_substation-4", default = "200MW" },
-      { name = "aeg_huge-electric-pole-2", default = "5GW" },
-      { name = "aeg_huge-electric-pole-3", default = "7GW" },
-      { name = "aeg_huge-electric-pole-4", default = "9GW" },
+      { name = "aeg_huge-electric-pole-2", default = "3.6GW" },
+      { name = "aeg_huge-electric-pole-3", default = "4.2GW" },
+      { name = "aeg_huge-electric-pole-4", default = "4.8GW" },
     }
 
     for _, pole in pairs(poles) do

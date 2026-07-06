@@ -30,4 +30,4 @@ The validator checks JSON, governance YAML when available, Lua syntax, the Facto
 
 ## Future Work
 
-- Investigate proportional Power Overload capacity scaling for AEG poles. The desired behavior is for AEG tiers to preserve their current ratios while deriving from the user's configured Power Overload Tier 1 pole capacities. This currently needs a Power Overload API change because external mods can register startup-setting defaults, but cannot read user-modified startup setting values during settings stage.
+- Derive Power Overload capacity defaults from the user's configured Tier 1 pole capacities if Power Overload exposes that data to external mods. AEG currently uses proportional startup defaults based on Power Overload's built-in Tier 1 defaults.
