@@ -13,4 +13,6 @@ This directory intentionally duplicates governance rules that may also appear in
 - `.governance/` governs this repository's work.
 - `lab-governance/` is the generalized rule set maintained here for propagation to other agents and repositories.
 
-Use `local/` for explicit repo-local deviations from the generalized rule set. Use `records/` for repo-local alignment notes or operational metadata. If a local rule should become general lab governance, promote it through an explicit `lab-governance/` policy or process change.
+Use `local/` for explicit repo-local deviations from the generalized rule set. The universal local policy pointer is `local/index.yaml`; the universal local governance status report is `local/status.yaml`. Everything else under `local/` is workspace-owned unless explicitly routed by that local pointer. Use `records/` for repo-local alignment notes or operational metadata. If a local rule should become general lab governance, promote it through an explicit `lab-governance/` policy or process change.
+
+Kind branches may add `.governance/templates/` for branch-specific local setup shapes. On the Factorio modding branch, `templates/factorio-local-overlay.yaml` records workspace-local mod facts such as namespace, dependency stack, upstream source, release target, and validation availability.

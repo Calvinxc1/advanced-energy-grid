@@ -12,3 +12,4 @@ Always load:
 Load additional policy only via:
 - `.governance/task-map.yaml`
 - `.governance/kind-routes.yaml` when present on a kind branch
+- `.governance/local/index.yaml` when present for workspace-local status and overlays

@@ -1,6 +1,6 @@
 id: kind_routes
 status: active
-kind: coding_agent
+kind: factorio_modding_agent
 default_load:
   - .governance/branch-descriptor.yaml
 route_resolution:
@@ -19,6 +19,9 @@ route_groups:
     - .governance/policies/commit-push-discipline.yaml
   coding.review:
     - .governance/policies/code-review.yaml
+  factorio.mod_work:
+    - .governance/policies/factorio-modding.yaml
+    - .governance/policies/factorio-release.yaml
 routes:
   discussion_or_planning:
     groups:
@@ -27,6 +30,7 @@ routes:
   substantive_work:
     groups:
       - coding.substantive
+      - factorio.mod_work
     files: []
   git_work:
     groups:
@@ -35,4 +39,20 @@ routes:
   code_review:
     groups:
       - coding.review
+      - factorio.mod_work
+    files: []
+  factorio_mod_work:
+    groups:
+      - coding.substantive
+      - factorio.mod_work
+    files: []
+  factorio_release_work:
+    groups:
+      - coding.git
+      - factorio.mod_work
+    files: []
+  factorio_review:
+    groups:
+      - coding.review
+      - factorio.mod_work
     files: []
