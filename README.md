@@ -26,13 +26,7 @@ Use:
 ./scripts/validate.sh
 ```
 
-The validator checks JSON, governance YAML when available, Lua syntax, the Factorio mods-folder symlink, and Factorio startup save creation when a Factorio binary is available. To require the Factorio load check, run:
-
-```bash
-AEG_REQUIRE_FACTORIO=1 ./scripts/validate.sh
-```
-
-Pull requests run the same required validation through Gitea Actions in `.gitea/workflows/ci.yml`. The runner must provide a Factorio executable through `FACTORIO_BIN`, `PATH`, or the default Steam install path used by `scripts/factorio-validate.sh`.
+The validator checks JSON, governance YAML when available, Lua syntax, the Factorio mods-folder symlink, and Factorio startup save creation when a Factorio binary is available.
 
 ## Future Work
 
