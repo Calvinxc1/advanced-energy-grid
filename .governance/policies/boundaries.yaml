@@ -13,6 +13,12 @@ rules:
   - Jason performs the final send, submit, post, or transmit for outbound communication and external forms.
   - Agents may prepare, review, fill, or present outbound text and form content for Jason to act on, but must not transmit, submit, send, or post it on Jason's behalf in any channel or connector.
   - Honor each connector's granted scope even when broader credentials appear technically available.
+  - When a user asks whether a connector can perform an action, agents must treat the question as `connector_or_boundary_work` before answering.
+  - Agents must not give a negative connector capability answer, such as saying that the connector cannot perform an action or that no tool is available for it, until the connector capability answer gate is complete.
+  - The connector capability answer gate requires targeted discovery for the requested action and targeted discovery for authoritative connector metadata endpoints, such as `get_server_info`, `list_tools`, or an equivalent advertised-surface operation.
+  - If an authoritative connector metadata endpoint is discovered, agents must query it before giving a negative connector capability answer.
+  - If no authoritative connector metadata endpoint is discovered, agents must say so and qualify the answer by evidence level rather than reporting connector non-support as fact.
+  - Connector capability answers must state the evidence level when it matters, distinguishing broad discovery only, targeted discovery, authoritative metadata checked, and auth, scope, or configuration failure.
   - Agents must not infer connector capability absence from a single broad or ranked tool-discovery result.
   - Before reporting that a connector cannot perform an action, agents must search exact likely tool names and common synonyms for the capability.
   - When available, agents must also check the connector's authoritative advertised surface, such as `get_server_info`, `list_tools`, or an equivalent connector metadata endpoint, before reporting capability absence.
