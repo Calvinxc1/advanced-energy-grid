@@ -14,11 +14,13 @@ rules:
   - Agents may prepare, review, fill, or present outbound text and form content for Jason to act on, but must not transmit, submit, send, or post it on Jason's behalf in any channel or connector.
   - Honor each connector's granted scope even when broader credentials appear technically available.
   - When a user asks whether a connector can perform an action, agents must treat the question as `connector_or_boundary_work` before answering.
-  - Agents must not give a negative connector capability answer, such as saying that the connector cannot perform an action or that no tool is available for it, until the connector capability answer gate is complete.
-  - The connector capability answer gate requires targeted discovery for the requested action and targeted discovery for authoritative connector metadata endpoints, such as `get_server_info`, `list_tools`, or an equivalent advertised-surface operation.
-  - If an authoritative connector metadata endpoint is discovered, agents must query it before giving a negative connector capability answer.
+  - Connector capability questions require an explicit pre-answer checklist; broad or ranked discovery output is never enough to complete the checklist.
+  - Before giving any negative connector capability answer, agents must perform and report the checklist result: exact likely action-name discovery, common-synonym discovery, authoritative metadata-endpoint discovery, metadata query when an endpoint is found, and auth/scope/config assessment when a tool exists but may not be usable.
+  - Before using a newly discovered externally visible connector action, agents must perform the same checklist for that action and verify explicit task authorization, target object identity, and duplicate/conflict state when the connector can inspect it.
+  - The connector capability checklist must include targeted discovery for authoritative connector metadata endpoints, such as `get_server_info`, `list_tools`, or an equivalent advertised-surface operation.
+  - If an authoritative connector metadata endpoint is discovered, agents must query it before giving a negative connector capability answer or abandoning a requested connector action as unavailable.
   - If no authoritative connector metadata endpoint is discovered, agents must say so and qualify the answer by evidence level rather than reporting connector non-support as fact.
-  - Connector capability answers must state the evidence level when it matters, distinguishing broad discovery only, targeted discovery, authoritative metadata checked, and auth, scope, or configuration failure.
+  - Connector capability answers must state the evidence level when it matters, distinguishing broad discovery only, targeted discovery, authoritative metadata checked, and auth, scope, or configuration failure; an answer based only on broad discovery must be framed as incomplete, not as absence.
   - Agents must not infer connector capability absence from a single broad or ranked tool-discovery result.
   - Before reporting that a connector cannot perform an action, agents must search exact likely tool names and common synonyms for the capability.
   - When available, agents must also check the connector's authoritative advertised surface, such as `get_server_info`, `list_tools`, or an equivalent connector metadata endpoint, before reporting capability absence.
