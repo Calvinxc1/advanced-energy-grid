@@ -8,9 +8,11 @@ rules:
   - Project-specific conversation topologies are allowed when the work calls for them, including hub-and-spoke coordination.
   - Before joining, monitoring, coordinating in, or closing an Althing or other live agent room, agents must load the `live_agent_coordination` route and the room transport's available connector boundaries.
   - Before calling a room join operation, an agent must know the room identifier, the canonical name it will use, its assigned or expected role when one was provided, any Jason-designated runner, closer, or liaison, and its obligation to maintain cursor-aware polling until suspended or dismissed by name.
-  - When an agent recommends moving a relay exchange into Althing and has room access, the recommending agent should create or join the room, post the room-start message, and wait there for the other agent rather than leaving Jason with only an idle prompt.
+  - When an agent with room access recommends, proposes, or accepts moving an exchange into Althing or another live agent room, that agent becomes the initiating room participant unless Jason explicitly assigns another initiator.
+  - The initiating room participant must create or join the room, post the task packet in-room, give Jason only a short invite prompt for any other requested participant, and maintain cursor-aware polling until peer join, suspension, closeout, Jason pause, or by-name dismissal.
   - After creating or joining a live room and giving Jason a prompt for another agent to join, the initiating agent must keep the room await loop active from the latest cursor until the other agent joins, the room is suspended, Jason explicitly pauses the effort, or the initiating agent is dismissed by name.
   - Do not treat delivery of a join prompt to Jason as completion of the live-room task when the initiating agent is already a room participant.
+  - Writing an invite prompt, room-start instruction, handoff, or status note for Jason is not completion of a live-room coordination task when the agent has joined or can join the room.
   - Do not send a final response that implies the room work is complete while the room is active and the agent remains undismissed; report interim status and keep monitoring instead.
   - When an agent recommends moving a relay exchange into Althing but cannot create or join the room, it must give Jason a ready-to-use prompt or room-start instruction for the agent that can.
   - When creating a live-room task for other agents, prefer posting the full task packet in the room and giving Jason only a short invite prompt that tells the target agent to join the named room with its canonical name and follow the posted packet.
@@ -18,6 +20,7 @@ rules:
   - Room-start instructions may use Jason's approximate name for another agent; agents must reconcile canonical participant names in-room rather than requiring Jason to know them up front.
   - A room-start message should be short and include only the room purpose, requested participant names or descriptions, task bullets, success condition, and closeout expectation.
   - A room-start message may include brief context only when the room cannot start without it; otherwise agents should exchange needed context in-room.
+  - "Live-room initiation checklist: canonical name from local status when available; room id; in-room task packet; runner, closer, liaison, caps, and status; short Jason invite prompt when another participant must be summoned; cursor-aware await loop from the latest cursor; no final response until closeout, suspension, Jason pause, or by-name dismissal."
   - Before joining a live room, load `.governance/local/status.yaml` through `.governance/local/index.yaml` when available and use its `canonical_agent_name` as the room identity.
   - If local status is absent, unreachable, or does not name a canonical agent, join with the best available task identity and say in the first room message that the canonical name is unsettled.
   - On joining a live room, announce in one line and check current presence when the transport supports it.

@@ -14,6 +14,7 @@ rules:
   - The closer controls room-level closeout or suspension and releases participants only after completion criteria are met or unresolved follow-ups are explicitly assigned.
   - The closer is responsible for dismissing every participant by name once that participant's contribution is authentically finished, including non-primary agents whose assigned slice is complete.
   - Participants do not self-exit before explicit by-name dismissal from the closer.
+  - Sending Jason an out-of-band status, handoff, or final response does not release a participant from live-room monitoring, closer duties, or dismissal requirements.
   - While awaiting dismissal, each participant actively maintains presence by rejoining or re-polling before expiry.
   - Joining an Althing or other live agent room and then ceasing active monitoring before suspension, closeout, or by-name dismissal is a protocol failure even when the agent believes its assigned work is complete.
   - A dismissed participant posts an explicit acknowledgment to its by-name dismissal before leaving.
