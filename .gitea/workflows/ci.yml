@@ -34,6 +34,8 @@ jobs:
               bash \
               ca-certificates \
               curl \
+              file \
+              gcompat \
               lua5.4 \
               python3 \
               py3-yaml \
@@ -46,6 +48,7 @@ jobs:
               bash \
               ca-certificates \
               curl \
+              file \
               lua5.4 \
               python3 \
               python3-yaml \
@@ -72,6 +75,7 @@ jobs:
             "https://factorio.com/get-download/stable/headless/linux64" \
             -o "$archive"
           tar -xf "$archive" -C "$factorio_dir" --strip-components=1
+          file "$factorio_dir/bin/x64/factorio"
           "$factorio_dir/bin/x64/factorio" --version
           echo "FACTORIO_BIN=$factorio_dir/bin/x64/factorio" >> "$GITHUB_ENV"
 
