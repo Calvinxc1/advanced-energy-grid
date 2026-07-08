@@ -17,8 +17,8 @@ jobs:
       - name: Check out repository
         env:
           CHECKOUT_REF: ${{ github.event.pull_request.head.sha || github.sha }}
-          CHECKOUT_REPOSITORY: factorio-modding/advanced-energy-grid
-          GITEA_SERVER_URL: https://gitea.infra.newedenhomestead.net
+          CHECKOUT_REPOSITORY: ${{ github.repository }}
+          GITEA_SERVER_URL: ${{ github.server_url }}
         run: |
           set -euxo pipefail
           git --version
@@ -43,8 +43,10 @@ jobs:
       - name: Prepare temporary Factorio mods directory
         run: |
           mods_dir="${RUNNER_TEMP:-/tmp}/factorio-mods"
+          mod_name="$(python3 -c 'import json; print(json.load(open("src/info.json", encoding="utf-8"))["name"])')"
+          rm -f "$mods_dir/$mod_name"
           mkdir -p "$mods_dir"
-          ln -s "$PWD/src" "$mods_dir/advanced-energy-grid"
+          ln -s "$PWD/src" "$mods_dir/$mod_name"
           echo "FACTORIO_MODS_DIR=$mods_dir" >> "$GITHUB_ENV"
 
       - name: Validate mod
