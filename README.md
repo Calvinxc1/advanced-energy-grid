@@ -16,7 +16,10 @@ Advanced Power Infrastructure keeps generation and storage content such as boile
 - MK2-MK4 substations.
 - Local distribution and distance transmission technology branches.
 - Optional Power Overload huge electric pole MK2-MK4 integration.
-- Optional Power Overload registration for AEG pole overload limits when the local Power Overload registry API is available.
+
+## Compatibility
+
+Power Overload compatibility is currently partial. The published Power Overload release applies overload limits to its built-in Tier 1 poles and fuses; Advanced Energy Grid's higher-tier poles are not registered for overload limits until the upstream Power Overload registry API is available.
 
 ## Validation
 
@@ -36,4 +39,4 @@ Pull requests run the same required validation through Gitea Actions in `.gitea/
 
 ## Future Work
 
-- Derive Power Overload capacity defaults from the user's configured Tier 1 pole capacities if Power Overload exposes that data to external mods. AEG currently uses proportional startup defaults based on Power Overload's built-in Tier 1 defaults.
+- Power Overload registry API integration is deferred until the upstream Power Overload interface is available.

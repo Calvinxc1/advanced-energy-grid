@@ -2,5 +2,6 @@ local_governance:
   load:
     - .governance/local/status.yaml
     - .governance/local/factorio-local-overlay.yaml
+    - .governance/local/factorio-workflow.yaml
   notes:
     - Workspace-local status and Factorio mod facts for Advanced Energy Grid.

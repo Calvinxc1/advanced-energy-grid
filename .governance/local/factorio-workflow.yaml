@@ -1,0 +1,78 @@
+schema: factorio_local_workflow
+schema_version: 1
+mod_name: advanced-energy-grid
+canonical_agent_name: Advanced Energy Grid Factorio Modding Agent
+workspace_path: /home/jcherry/Documents/git/factorio-mods/advanced-energy-grid
+metadata_path: src/info.json
+ownership_model: internal_mod
+upstream_or_fork_source: local Factorio mod workspace for Jason M. Cherry
+namespace_prefixes:
+  - advanced-energy-grid
+  - aeg
+dependency_stack:
+  - base >= 2.0.0
+  - space-age >= 2.0.0
+optional_dependencies:
+  - PowerOverload >= 1.6.0
+scope_boundaries:
+  - Owns electric poles, substations, long-distance transmission, electric distribution/transmission technologies, recipes, items, and entities for grid infrastructure.
+  - Owns optional Power Overload huge-pole integration for Advanced Energy Grid pole tiers.
+  - Does not own generation or storage content retained by Advanced Power Infrastructure, including boilers, steam engines, turbines, heat exchangers, heat pipes, reactors, fusion, solar, accumulators, and power footprint benchmarks.
+release_target: Factorio 2.0 with Space Age
+internal_gitflow_stage: dev_promotion
+branch_roles:
+  main: Release and stable integration authority after promotion.
+  dev: Current ordinary work and integration branch.
+  feature: Explicit Jason-approved feature branches may be created from dev for parked work; feature branches are not required for ordinary work.
+  release: Not enabled; no release branches are in use.
+  hotfix: Not established.
+release_promotion_path: Promote dev to main only through a Jason-approved explicit promotion action; do not keep a standing dev-to-main pull request open.
+feature_branching_enabled: explicit_only
+release_branching_enabled: false
+main_branch_protection:
+  enabled: null
+  notes: Branch protection was not exposed by the available Gitea connector during the 2026-07-08 review.
+hotfix_flow:
+  enabled: false
+  branch_pattern: null
+  sync_requirements:
+    - If an urgent main-only fix is approved before release_branching is adopted, sync the fix back to dev before resuming ordinary dev work.
+post_release_main_to_dev_sync:
+  required: true
+  mechanism: Manual sync from main back to dev when main receives changes not already present on dev.
+  automation_validated: false
+  failure_owner: Jason or the acting agent assigned to the release or promotion.
+ci_cd_release_gates:
+  validation: Gitea Actions pull request validation exists on dev in .gitea/workflows/ci.yml and runs ./scripts/validate.sh with AEG_REQUIRE_FACTORIO=1; workflow run listing was unavailable through the connector during the 2026-07-08 review.
+  packaging: Not established.
+  publishing: Not established; publishing requires explicit Jason approval.
+  post_release_sync: Not automated or validated.
+changelog_process:
+  format: Factorio mod portal changelog format in src/changelog.txt.
+  pending_notes_mechanism: Not established; for player-visible work, record the intended changelog bullet and category before promotion or update src/changelog.txt during release work.
+  top_version_must_match_metadata: true
+validation_available:
+  json: ./scripts/validate.sh validates src/info.json
+  lua_syntax: ./scripts/validate.sh runs luac -p for Lua files under src
+  lint: YAML parsing is included when PyYAML is available; no broader lint tool is established.
+  format: Not established.
+  factorio_load: ./scripts/validate.sh delegates to ./scripts/factorio-validate.sh; CI requires a Factorio headless runner with AEG_REQUIRE_FACTORIO=1.
+declared_deviations:
+  - The repository has dev and main but no standing dev-to-main PR; it has not adopted release branches, hotfix branches, required feature branches, packaging, publishing, or automated post-release sync.
+  - feature/power-overload-registry-interface was created from dev on 2026-07-08 as an explicit parked-work branch for future Power Overload registry API integration.
+workspace_specific_rules:
+  - Preserve src/info.json dependencies unless Jason explicitly changes the mod dependency contract.
+  - Keep Power Overload integration optional.
+  - Do not publish, tag, package, upload, release, push, or advance to release_branching or full_gitflow unless Jason explicitly asks.
+  - Do not merge or release feature/power-overload-registry-interface until the upstream Power Overload registry interface is available and Jason explicitly resumes that work.
+migration_notes:
+  - Stage review on 2026-07-08 found remote branches main and dev only, no tags, no release branches, and no hotfix branches.
+  - PR #1 from dev to main was closed unmerged on 2026-07-08 because a standing dev-to-main PR conflicts with the intended Gitea workflow for this repository.
+  - main currently lacks .gitea/workflows/ci.yml; dev contains the validation workflow pending promotion.
+  - Power Overload registry integration was removed from dev on 2026-07-08 and parked on feature/power-overload-registry-interface.
+last_stage_reviewed_at: 2026-07-08
+known_gaps:
+  - Branch protection status is unknown because the available Gitea connector does not expose it.
+  - Gitea Actions run listing was unavailable through the connector during review.
+  - No release packaging, publishing, release-branch, hotfix, or automated main-to-dev sync process is established.
+notes: Do not put secrets or credentials here.
