@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.0.1
-Date: 2026.07.05
+Version: 0.1.0
+Date: 2026.07.08
   Changes
     - Initialized Advanced Energy Grid as the electric-grid split from Advanced Power Infrastructure.
     - Added upgraded small, medium, and big electric pole tiers with aeg_ prototype IDs.
