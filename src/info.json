@@ -4,8 +4,9 @@
   "factorio_version": "2.0",
   "title": "Advanced Energy Grid",
   "author": "Jason M. Cherry",
-  "contact": "",
-  "description": "Adds expanded electric grid infrastructure progression for poles, substations, long-distance transmission, and optional Power Overload huge-pole tiers.",
+  "contact": "https://github.com/Calvinxc1/advanced-energy-grid/issues",
+  "homepage": "https://github.com/Calvinxc1/advanced-energy-grid",
+  "description": "Adds staged electric pole, substation, long-distance transmission, and optional Power Overload huge-pole progression for Factorio 2.0 and Space Age.",
   "dependencies": [
     "base >= 2.0.0",
     "space-age >= 2.0.0",
