@@ -64,7 +64,7 @@ Pull requests run the same required validation through Gitea Actions in `.gitea/
 
 ## License
 
-Advanced Energy Grid is released under the [MIT License](LICENSE).
+Advanced Energy Grid is released under the [GNU General Public License v3.0](LICENSE).
 
 ## AI Disclosure
 

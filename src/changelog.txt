@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.2
+Date: 2026.07.09
+  Changes
+    - Changed the packaged mod license from MIT to GNU GPLv3.
+    - Updated repository and source documentation to reference GNU GPLv3.
+---------------------------------------------------------------------------------------------------
 Version: 0.1.1
 Date: 2026.07.09
   Changes
