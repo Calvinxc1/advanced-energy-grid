@@ -6,4 +6,4 @@ The mod adds upgraded small electric poles, medium electric poles, big electric 
 
 Power Overload compatibility is currently partial. The published Power Overload release applies overload limits to its built-in Tier 1 poles and fuses. Advanced Energy Grid's higher-tier poles are not registered for overload limits until the upstream Power Overload registry API is available.
 
-Advanced Energy Grid is released under the MIT License.
+Advanced Energy Grid is released under the GNU General Public License v3.0.
