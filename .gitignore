@@ -1,9 +1,31 @@
+# Editors and IDEs
 .idea/
+.vscode/
+*.swp
+*.swo
+*~
 
-# Factorio package artifacts
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local secrets and environment
+.env
+
+# Factorio build/package output
+dist/
+build/
 *.zip
 
-# Runtime logs and temporary files
+# Validation and runtime scratch
 *.log
 tmp/
 temp/
+
+# Lua tooling caches
+.luarocks/
+luac.out
+
+# Python tooling caches
+__pycache__/
+*.py[cod]

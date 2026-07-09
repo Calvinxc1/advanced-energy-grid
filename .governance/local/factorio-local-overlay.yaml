@@ -18,7 +18,7 @@ scope_boundaries:
   - Owns optional Power Overload huge-pole integration for Advanced Energy Grid pole tiers.
   - Does not own generation or storage content retained by Advanced Power Infrastructure, including boilers, steam engines, turbines, heat exchangers, heat pipes, reactors, fusion, solar, accumulators, and power footprint benchmarks.
 release_target: Factorio 2.0 with Space Age
-changelog_format: not established in this workspace
+changelog_format: Factorio mod portal format in src/changelog.txt
 validation_available:
   json: ./scripts/validate.sh validates src/info.json
   lua_syntax: ./scripts/validate.sh runs luac -p for Lua files under src
@@ -30,9 +30,9 @@ workspace_specific_rules:
   - Keep Power Overload integration optional.
   - Do not publish, tag, package, upload, release, or push unless Jason explicitly asks.
 migration_notes:
-  - Previous local governance branch/canon was coding-agent/1.1.0 with generalized trunk/2.8.0.
-  - Target governance branch/canon is factorio-modding-agent/factorio-modding-agent/1.0.0.
-  - Legacy .governance/local/version-stamp.yaml is intentionally preserved as migration evidence.
+  - Local governance was migrated to factorio-modding-agent/factorio-modding-agent/1.0.0.
+  - Superseded pre-Factorio local governance evidence was removed on Jason's 2026-07-07 instruction.
   - Stale governance-repo maintainer deviations and local index were removed because they described ai-governance repository maintenance, not this mod workspace.
   - The old canonical prompt path lab-governance/templates/governed-agent-update-prompt.md was not present on the target source branch; this update followed Jason's explicit migration instructions and used available source templates.
+  - Gitflow stage and release workflow facts are recorded in .governance/local/factorio-workflow.yaml.
 notes: Local facts are derived from src/info.json, README.md, src/README.md, and scripts/validate.sh. Do not put secrets or credentials here.
