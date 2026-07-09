@@ -8,8 +8,8 @@ namespace_prefixes:
   - advanced-energy-grid
   - aeg
 dependency_stack:
-  - base >= 2.0.0
-  - space-age >= 2.0.0
+  - base >= 2.1.0
+  - space-age >= 2.1.0
 optional_dependencies:
   - PowerOverload >= 1.6.0
 upstream_or_fork_source: local Factorio mod workspace for Jason M. Cherry
@@ -17,7 +17,7 @@ scope_boundaries:
   - Owns electric poles, substations, long-distance transmission, electric distribution/transmission technologies, recipes, items, and entities for grid infrastructure.
   - Owns optional Power Overload huge-pole integration for Advanced Energy Grid pole tiers.
   - Does not own generation or storage content retained by Advanced Power Infrastructure, including boilers, steam engines, turbines, heat exchangers, heat pipes, reactors, fusion, solar, accumulators, and power footprint benchmarks.
-release_target: Factorio 2.0 with Space Age
+release_target: Factorio 2.1 with Space Age
 changelog_format: Factorio mod portal format in src/changelog.txt
 validation_available:
   json: ./scripts/validate.sh validates src/info.json

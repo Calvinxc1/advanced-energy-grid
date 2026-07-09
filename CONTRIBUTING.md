@@ -2,7 +2,7 @@
 
 Contributions are welcome through pull requests against the `dev` branch.
 
-Day-to-day maintainer implementation may happen directly on `dev` for now. Feature branches are not required until the repository maintainer enables feature branching for this repository.
+Use short-lived `feature/*` branches for ordinary scoped implementation and merge them back to `dev` after review and validation.
 
 Before opening a pull request, run:
 

@@ -9,6 +9,6 @@ source_repository_or_path: gitea.infra.newedenhomestead.net:ai-projects/ai-gover
 governance_source_commit: 4c806a6cad8c776cd59021b5abb11afc5d0f5f33
 runtime_surface: codex_cli
 code_authority: factorio_mod_workspace_with_explicit_user_authorization
-last_verified_at: 2026-07-08
+last_verified_at: 2026-07-09
 agent_declared_status: current
-notes: Updated local governance from origin/factorio-modding-agent at 4c806a6cad8c776cd59021b5abb11afc5d0f5f33 after Jason confirmed the canonical agent name, kind, and branch. Preserved workspace-local governance files, including .governance/local/ and existing records.
+notes: Updated local governance from origin/factorio-modding-agent at 4c806a6cad8c776cd59021b5abb11afc5d0f5f33 after Jason confirmed the canonical agent name, kind, and branch. Preserved workspace-local governance files, including .governance/local/ and existing records. On 2026-07-09 Jason declared this repository to be in full compliance with the governance GitFlow policy.

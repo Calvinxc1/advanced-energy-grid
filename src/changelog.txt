@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.1
+Date: 2026.07.09
+  Changes
+    - Marked the mod compatible with Factorio 2.1 and Space Age 2.1.
+    - Updated base and Space Age dependency bounds for Factorio 2.1.
+---------------------------------------------------------------------------------------------------
 Version: 0.1.0
 Date: 2026.07.08
   Changes

@@ -10,24 +10,24 @@ namespace_prefixes:
   - advanced-energy-grid
   - aeg
 dependency_stack:
-  - base >= 2.0.0
-  - space-age >= 2.0.0
+  - base >= 2.1.0
+  - space-age >= 2.1.0
 optional_dependencies:
   - PowerOverload >= 1.6.0
 scope_boundaries:
   - Owns electric poles, substations, long-distance transmission, electric distribution/transmission technologies, recipes, items, and entities for grid infrastructure.
   - Owns optional Power Overload huge-pole integration for Advanced Energy Grid pole tiers.
   - Does not own generation or storage content retained by Advanced Power Infrastructure, including boilers, steam engines, turbines, heat exchangers, heat pipes, reactors, fusion, solar, accumulators, and power footprint benchmarks.
-release_target: Factorio 2.0 with Space Age
-internal_gitflow_stage: release_branching
+release_target: Factorio 2.1 with Space Age
+internal_gitflow_stage: full_gitflow
 branch_roles:
   main: Release authority; pushes validate and publish only when src/info.json version changes.
-  dev: Current ordinary work and integration branch.
-  feature: Explicit Jason-approved feature branches may be created from dev for parked work; feature branches are not required for ordinary work.
+  dev: Long-lived integration branch for ratified work before release promotion.
+  feature: Short-lived implementation or parked-work branches created from dev and merged back to dev.
   release: Short-lived release or promotion branches created from dev and merged into main.
   hotfix: Urgent correction branches from main when needed.
 release_promotion_path: Promote dev to main through short-lived release/<version-or-purpose> branches; do not keep a standing dev-to-main pull request open.
-feature_branching_enabled: explicit_only
+feature_branching_enabled: true
 release_branching_enabled: true
 main_branch_protection:
   enabled: null
@@ -58,13 +58,12 @@ validation_available:
   lint: YAML parsing is included when PyYAML is available; no broader lint tool is established.
   format: Not established.
   factorio_load: ./scripts/validate.sh delegates to ./scripts/factorio-validate.sh; CI requires a Factorio headless runner with AEG_REQUIRE_FACTORIO=1.
-declared_deviations:
-  - The repository has dev and main but no standing dev-to-main PR; release promotions use short-lived release branches and feature branches remain explicit-only.
-  - feature/power-overload-registry-interface was created from dev on 2026-07-08 as an explicit parked-work branch for future Power Overload registry API integration.
+declared_deviations: []
 workspace_specific_rules:
   - Preserve src/info.json dependencies unless Jason explicitly changes the mod dependency contract.
   - Keep Power Overload integration optional.
-  - Do not manually publish, tag, package, upload, release, push, or advance to full_gitflow unless Jason explicitly asks.
+  - Use feature/* branches for ordinary scoped implementation, parked work, and CI/CD changes before merging to dev.
+  - Do not manually publish, tag, package, upload, release, or push unless Jason explicitly asks.
   - Do not merge or release feature/power-overload-registry-interface until the upstream Power Overload registry interface is available and Jason explicitly resumes that work.
   - Main-push release automation is allowed only through the documented release branch process and required repository secrets.
 migration_notes:
@@ -72,7 +71,9 @@ migration_notes:
   - PR #1 from dev to main was closed unmerged on 2026-07-08 because a standing dev-to-main PR conflicts with the intended Gitea workflow for this repository.
   - AFI-style CI/CD was ported on 2026-07-08 from Advanced Fluid Infrastructure main/dev plus feature/discord-release-changelog.
   - Power Overload registry integration was removed from dev on 2026-07-08 and parked on feature/power-overload-registry-interface.
-last_stage_reviewed_at: 2026-07-08
+  - On 2026-07-09 Jason declared AEG to be in full compliance with the governance GitFlow policy.
+  - Deploy release automation was removed from dev/main and parked for review on feature/deploy-workflow.
+last_stage_reviewed_at: 2026-07-09
 known_gaps:
   - Branch protection status is unknown because the available Gitea connector does not expose it.
   - Gitea Actions run listing was unavailable through the connector during review.
