@@ -1,12 +1,12 @@
 # Advanced Energy Grid
 
-Advanced Energy Grid is a Factorio 2.0 + Space Age mod that makes electric distribution and long-distance transmission part of factory progression.
+Advanced Energy Grid is a Factorio 2.1 + Space Age mod that makes electric distribution and long-distance transmission part of factory progression.
 
 Vanilla electric poles cover most factory needs very early. This mod adds staged pole, substation, and transmission upgrades so compact early grids grow into deliberate local distribution and long-distance backbone networks.
 
 ## Requirements
 
-- Factorio 2.0.
+- Factorio 2.1.
 - Space Age.
 - Optional Power Overload integration when Power Overload is installed.
 
@@ -54,7 +54,7 @@ Contribution guidelines are documented in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Development Validation
 
-The validator checks JSON, governance YAML when available, Lua syntax, the Factorio mods-folder symlink, and Factorio startup save creation when a Factorio binary is available. To require the Factorio load check:
+The validator checks JSON, governance YAML when available, Lua syntax, the Factorio mods-folder symlink, and Factorio startup save creation when a Factorio 2.1 binary is available. To require the Factorio load check:
 
 ```sh
 AEG_REQUIRE_FACTORIO=1 ./scripts/validate.sh
