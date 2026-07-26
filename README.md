@@ -8,7 +8,7 @@ Vanilla electric poles cover most factory needs very early. This mod adds staged
 
 - Factorio 2.1.
 - Space Age.
-- Optional Power Overload integration when Power Overload is installed.
+- Optional Power Overload integration when Power Overload 2.2.0 or newer is installed.
 
 ## Features
 
@@ -34,7 +34,7 @@ Current pole behavior is documented in [docs/electric-grid-benchmark.md](docs/el
 
 ## Compatibility
 
-Power Overload compatibility is currently partial. The published Power Overload release applies overload limits to its built-in Tier 1 poles and fuses. Advanced Energy Grid's higher-tier poles are not registered for overload limits until the upstream Power Overload registry API is available.
+Advanced Energy Grid registers its upgraded electric poles with Power Overload 2.2.0 or newer so they receive configurable overload limits and tooltips. Power Overload remains optional; without it, the AEG pole progression still loads without overload behavior.
 
 ## Installation
 
@@ -74,4 +74,4 @@ AI-assisted work in this repository is governed through the policy files under `
 
 ## Future Work
 
-- Power Overload registry API integration is deferred until the upstream Power Overload interface is available.
+- Derive Power Overload capacity defaults from the user's configured Tier 1 pole capacities if Power Overload exposes that data to external mods. AEG currently uses proportional startup defaults based on Power Overload's built-in Tier 1 defaults.
