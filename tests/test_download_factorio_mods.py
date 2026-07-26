@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+"""Unit tests for the headless Mod Portal downloader."""
+
+from __future__ import annotations
+
+import importlib.util
+from pathlib import Path
+import unittest
+from unittest.mock import patch
+
+
+MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "download-factorio-mods.py"
+SPEC = importlib.util.spec_from_file_location("download_factorio_mods", MODULE_PATH)
+assert SPEC is not None and SPEC.loader is not None
+DOWNLOADER = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(DOWNLOADER)
+
+
+class DependencyNamesTest(unittest.TestCase):
+    def test_recommended_dependencies_are_included_by_default(self) -> None:
+        info_json = {
+            "dependencies": [
+                "base >= 2.1.0",
+                "+ advanced-energy-grid",
+                "? optional-integration",
+                "(?) hidden-integration",
+                "~ load-order-independent-required",
+                "hard-required",
+                "! incompatible-mod",
+            ]
+        }
+
+        self.assertEqual(
+            DOWNLOADER.dependency_names(info_json, include_optional=False),
+            ["advanced-energy-grid", "load-order-independent-required", "hard-required"],
+        )
+        self.assertEqual(
+            DOWNLOADER.dependency_names(info_json, include_optional=True),
+            [
+                "advanced-energy-grid",
+                "optional-integration",
+                "hidden-integration",
+                "load-order-independent-required",
+                "hard-required",
+            ],
+        )
+
+    def test_local_metadata_always_includes_optional_dependencies(self) -> None:
+        with patch.object(DOWNLOADER, "download_mod_closure") as download_mod:
+            DOWNLOADER.download_info_dependency_closure(
+                {
+                    "name": "local-mod",
+                    "dependencies": ["? optional-mod", "+ recommended-mod", "base"],
+                },
+                factorio_version="2.1",
+                mods_dir=Path("/tmp/mods"),
+                username="user",
+                token="token",
+            )
+
+        self.assertEqual([call.args[0] for call in download_mod.call_args_list], ["optional-mod", "recommended-mod"])
+        for call in download_mod.call_args_list:
+            self.assertTrue(call.kwargs["include_dependencies"])
+            self.assertTrue(call.kwargs["include_optional_dependencies"])
+            self.assertEqual(call.kwargs["active_chain"], ["local-mod"])
+
+
+class DependencyCycleTest(unittest.TestCase):
+    def test_circular_dependency_is_reported(self) -> None:
+        releases = {
+            "first": {"info_json": {"dependencies": ["second"]}},
+            "second": {"info_json": {"dependencies": ["first"]}},
+        }
+
+        with patch.object(DOWNLOADER, "latest_compatible_release", side_effect=lambda name, _: releases[name]):
+            with self.assertRaisesRegex(
+                DOWNLOADER.DownloadError, r"Circular Mod Portal dependency: first -> second -> first"
+            ):
+                DOWNLOADER.download_info_dependency_closure(
+                    {"name": "local-mod", "dependencies": ["first"]},
+                    factorio_version="2.1",
+                    mods_dir=Path("/tmp/mods"),
+                    username="user",
+                    token="token",
+                )
+
+
+if __name__ == "__main__":
+    unittest.main()

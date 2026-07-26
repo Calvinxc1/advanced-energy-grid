@@ -48,15 +48,6 @@ if [[ ! -x "$factorio_bin" ]]; then
   exit 127
 fi
 
-tmp_dir="$(mktemp -d)"
-trap 'rm -rf "$tmp_dir"' EXIT
-
-if [[ -n "${FACTORIO_MODS_DIR:-}" && "${AEG_USE_EXISTING_FACTORIO_MODS_DIR:-0}" != "1" ]]; then
-  mods_dir="$tmp_dir/mods"
-  mkdir -p "$mods_dir"
-  ln -s "$repo_root/src" "$mods_dir/$mod_name"
-fi
-
 if [[ ! -d "$mods_dir" ]]; then
   skip_or_fail 1 "Factorio mods directory not found: $mods_dir"
 fi
@@ -76,6 +67,8 @@ if [[ "$resolved" != "$repo_root/src" ]]; then
   exit 1
 fi
 
+tmp_dir="$(mktemp -d)"
+trap 'rm -rf "$tmp_dir"' EXIT
 config_dir="$tmp_dir/config"
 write_dir="$tmp_dir/write"
 mkdir -p "$config_dir" "$write_dir"
