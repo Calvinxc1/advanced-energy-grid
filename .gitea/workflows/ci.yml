@@ -42,10 +42,10 @@ jobs:
 
       - name: Prepare temporary Factorio mods directory
         run: |
-          mods_dir="${RUNNER_TEMP:-/tmp}/factorio-mods"
+          runner_temp="${RUNNER_TEMP:-/tmp}"
+          mkdir -p "$runner_temp"
+          mods_dir="$(mktemp -d "$runner_temp/factorio-mods.XXXXXX")"
           mod_name="$(python3 -c 'import json; print(json.load(open("src/info.json", encoding="utf-8"))["name"])')"
-          rm -f "$mods_dir/$mod_name"
-          mkdir -p "$mods_dir"
           ln -s "$PWD/src" "$mods_dir/$mod_name"
           echo "FACTORIO_MODS_DIR=$mods_dir" >> "$GITHUB_ENV"
 
