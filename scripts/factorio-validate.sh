@@ -51,7 +51,7 @@ fi
 tmp_dir="$(mktemp -d)"
 trap 'rm -rf "$tmp_dir"' EXIT
 
-if [[ "${GITHUB_ACTIONS:-}" == "true" || "${CI:-}" == "true" ]]; then
+if [[ -n "${FACTORIO_MODS_DIR:-}" && "${AEG_USE_EXISTING_FACTORIO_MODS_DIR:-0}" != "1" ]]; then
   mods_dir="$tmp_dir/mods"
   mkdir -p "$mods_dir"
   ln -s "$repo_root/src" "$mods_dir/$mod_name"
