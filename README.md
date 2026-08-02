@@ -19,6 +19,10 @@ Vanilla electric poles cover most factory needs very early. This mod adds staged
 - Split local distribution and distance transmission technology branches.
 - Optional Power Overload huge electric pole MK2-MK4 progression.
 
+## Companion Mods
+
+Advanced Energy Grid is one of three companion mods designed to be played together: this mod for poles, substations, and transmission; Advanced Fluid Infrastructure for pipes and pumps; and Advanced Power Infrastructure for boilers, turbines, reactors, and other generation and storage. Each mod loads and works fine on its own, but the staged progression is designed with all three installed together.
+
 ## Progression Shape
 
 Advanced Energy Grid splits electric infrastructure into local distribution and distance transmission paths:
