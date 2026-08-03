@@ -223,6 +223,15 @@ The secret value must be a Factorio API key created from the Factorio account pr
 
 Mod portal upload is skipped for non-release promotions because the upload step exits when `DEPLOY_MOD` is not `1`.
 
+Pull-request validation can also download the complete Mod Portal dependency closure declared in `src/info.json`. Configure these repository Actions secrets to enable that conditional validation step:
+
+```text
+FACTORIO_MOD_PORTAL_USERNAME
+FACTORIO_MOD_PORTAL_TOKEN
+```
+
+The downloader includes required, recommended, optional, and hidden optional dependencies, then runs headless Factorio against that clean mod list. The step remains skipped until both secrets are configured, so ordinary CI does not depend on portal credentials.
+
 The upload helper is:
 
 ```sh

@@ -31,15 +31,15 @@ This checklist is intentionally version-agnostic. Do not hard-code today's canon
 ## Local Governance
 
 - Confirm `.governance/local/index.yaml` exists as the local governance pointer when the workspace has local status, workflow facts, or deviations.
-- Confirm `.governance/local/status.yaml` exists when the workspace participates in portable local governance status.
+- Confirm `.governance/status.yaml` exists when the workspace participates in portable local governance status.
 - Confirm local status records the canonical agent name, active governance branch, active `canon_version`, and parent or generalized `canon_version` using the current target values.
 - Confirm workspace-local workflow facts, deviations, and notes remain local policy or local metadata rather than being folded into generalized branch policy.
 - Confirm local workflow facts are filled from the current workspace, not copied from another repository.
 
 ## Path And Publication Boundaries
 
-- Confirm downstream workspaces do not rely on active `lab-governance/...` paths unless the workspace is intentionally the source governance repository.
-- Confirm a top-level `lab-governance/` tree is absent from downstream repositories unless Jason explicitly wants that repository to maintain generalized governance.
+- Confirm downstream workspaces do not rely on active `.governance/...` paths unless the workspace is intentionally the source governance repository.
+- Confirm a top-level `.governance/` tree is absent from downstream repositories unless Jason explicitly wants that repository to maintain generalized governance.
 - For intentionally local-only governance, confirm the local files are excluded from publication or commit through the workspace's chosen local mechanism.
 - Local-only fork governance may note that a workspace is an upstream fork and keep fork-specific rules local, but the actual fork-specific policy must live in that workspace's local governance files.
 

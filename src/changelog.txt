@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 2026.07.25
+  Changes
+    - Added Power Overload 2.2.0 registry integration for Advanced Energy Grid pole overload limits and tooltips.
+    - Raised the optional Power Overload dependency to version 2.2.0 or newer.
+    - Documented the default overload limits for Advanced Energy Grid pole tiers.
+---------------------------------------------------------------------------------------------------
 Version: 0.1.2
 Date: 2026.07.09
   Changes:
