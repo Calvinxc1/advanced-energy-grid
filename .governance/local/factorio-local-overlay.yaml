@@ -11,7 +11,7 @@ dependency_stack:
   - base >= 2.1.0
   - space-age >= 2.1.0
 optional_dependencies:
-  - PowerOverload >= 1.6.0
+  - PowerOverload >= 2.2.0
 upstream_or_fork_source: local Factorio mod workspace for Jason M. Cherry
 scope_boundaries:
   - Owns electric poles, substations, long-distance transmission, electric distribution/transmission technologies, recipes, items, and entities for grid infrastructure.

@@ -1,0 +1,11 @@
+{
+  "name": "aeg-power-overload-compatibility-test",
+  "version": "0.0.1",
+  "title": "AEG Power Overload pole registration assertions",
+  "author": "Advanced Energy Grid",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "advanced-energy-grid >= 0.2.0",
+    "PowerOverload"
+  ]
+}

@@ -4,6 +4,6 @@ Advanced Energy Grid is a Factorio 2.1 + Space Age mod that adds staged electric
 
 The mod adds upgraded small electric poles, medium electric poles, big electric poles, and substations. When Power Overload is installed, it also adds MK2-MK4 huge electric poles as an optional long-distance backbone branch.
 
-Power Overload compatibility is currently partial. The published Power Overload release applies overload limits to its built-in Tier 1 poles and fuses. Advanced Energy Grid's higher-tier poles are not registered for overload limits until the upstream Power Overload registry API is available.
+Power Overload compatibility requires Power Overload 2.2.0 or newer. Advanced Energy Grid registers its upgraded electric poles with Power Overload so they receive configurable overload limits and tooltips when Power Overload is installed.
 
 Advanced Energy Grid is released under the GNU General Public License v3.0.
