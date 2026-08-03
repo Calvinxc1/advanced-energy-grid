@@ -11,6 +11,7 @@ Thumbs.db
 
 # Local secrets and environment
 .env
+/.ai/
 
 # Factorio build/package output
 dist/

@@ -13,7 +13,7 @@ dependency_stack:
   - base >= 2.1.0
   - space-age >= 2.1.0
 optional_dependencies:
-  - PowerOverload >= 1.6.0
+  - PowerOverload >= 2.2.0
 scope_boundaries:
   - Owns electric poles, substations, long-distance transmission, electric distribution/transmission technologies, recipes, items, and entities for grid infrastructure.
   - Owns optional Power Overload huge-pole integration for Advanced Energy Grid pole tiers.
@@ -64,13 +64,14 @@ workspace_specific_rules:
   - Keep Power Overload integration optional.
   - Use feature/* branches for ordinary scoped implementation, parked work, and CI/CD changes before merging to dev.
   - Do not manually publish, tag, package, upload, release, or push unless Jason explicitly asks.
-  - Do not merge or release feature/power-overload-registry-interface until the upstream Power Overload registry interface is available and Jason explicitly resumes that work.
+  - Do not release Power Overload registry integration unless the optional dependency remains pinned to a public Power Overload release that includes the registry interface.
   - Main-push release automation is allowed only through the documented release branch process and required repository secrets.
 migration_notes:
   - Stage review on 2026-07-08 found remote branches main and dev only, no tags, no release branches, and no hotfix branches.
   - PR #1 from dev to main was closed unmerged on 2026-07-08 because a standing dev-to-main PR conflicts with the intended Gitea workflow for this repository.
   - AFI-style CI/CD was ported on 2026-07-08 from Advanced Fluid Infrastructure main/dev plus feature/discord-release-changelog.
   - Power Overload registry integration was removed from dev on 2026-07-08 and parked on feature/power-overload-registry-interface.
+  - On 2026-07-25, the Power Overload registry interface was available in the public 2.2.0 release, making AEG registry integration resumable.
   - On 2026-07-09 Jason declared AEG to be in full compliance with the governance GitFlow policy.
   - Deploy release automation was removed from dev/main and parked for review on feature/deploy-workflow.
 last_stage_reviewed_at: 2026-07-09
