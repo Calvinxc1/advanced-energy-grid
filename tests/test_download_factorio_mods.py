@@ -45,7 +45,13 @@ class DependencyNamesTest(unittest.TestCase):
             ],
         )
 
-    def test_local_metadata_always_includes_optional_dependencies(self) -> None:
+    def test_local_metadata_includes_optional_dependencies_without_recursing(self) -> None:
+        # Only what `local-mod` declares directly should be downloaded.
+        # include_dependencies must be False here: a downloaded dependency's
+        # own optional/recommended/hidden-optional dependencies must not be
+        # pulled in, since that graph can reach arbitrarily far across the
+        # Mod Portal (e.g. a hidden-optional compatibility shim several hops
+        # away with no Factorio-version-compatible release).
         with patch.object(DOWNLOADER, "download_mod_closure") as download_mod:
             DOWNLOADER.download_info_dependency_closure(
                 {
@@ -60,13 +66,18 @@ class DependencyNamesTest(unittest.TestCase):
 
         self.assertEqual([call.args[0] for call in download_mod.call_args_list], ["optional-mod", "recommended-mod"])
         for call in download_mod.call_args_list:
-            self.assertTrue(call.kwargs["include_dependencies"])
+            self.assertFalse(call.kwargs["include_dependencies"])
             self.assertTrue(call.kwargs["include_optional_dependencies"])
             self.assertEqual(call.kwargs["active_chain"], ["local-mod"])
 
 
 class DependencyCycleTest(unittest.TestCase):
     def test_circular_dependency_is_reported(self) -> None:
+        # download_info_dependency_closure (the --from-info path CI uses) no
+        # longer recurses at all, so it can no longer hit a cycle. This
+        # exercises download_mod_closure directly, which still recurses (and
+        # still needs cycle protection) when explicitly requested via
+        # --mod --with-dependencies.
         releases = {
             "first": {"info_json": {"dependencies": ["second"]}},
             "second": {"info_json": {"dependencies": ["first"]}},
@@ -76,12 +87,16 @@ class DependencyCycleTest(unittest.TestCase):
             with self.assertRaisesRegex(
                 DOWNLOADER.DownloadError, r"Circular Mod Portal dependency: first -> second -> first"
             ):
-                DOWNLOADER.download_info_dependency_closure(
-                    {"name": "local-mod", "dependencies": ["first"]},
+                DOWNLOADER.download_mod_closure(
+                    "first",
                     factorio_version="2.1",
+                    include_dependencies=True,
+                    include_optional_dependencies=True,
                     mods_dir=Path("/tmp/mods"),
                     username="user",
                     token="token",
+                    completed=set(),
+                    active_chain=[],
                 )
 
 

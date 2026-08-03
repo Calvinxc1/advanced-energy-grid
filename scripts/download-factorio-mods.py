@@ -183,13 +183,19 @@ def download_info_dependency_closure(
     username: str,
     token: str,
 ) -> None:
+    # Only the dependencies declared directly on `info` are downloaded.
+    # Deliberately not recursive: a downloaded dependency's own
+    # optional/recommended/hidden-optional dependencies are not pulled in,
+    # since that graph can reach arbitrarily far across the Mod Portal (e.g.
+    # a hidden-optional compatibility shim several hops away with no
+    # Factorio-version-compatible release).
     completed: set[str] = set()
     active_chain = [info["name"]]
     for dependency in dependency_names(info, include_optional=True):
         download_mod_closure(
             dependency,
             factorio_version=factorio_version,
-            include_dependencies=True,
+            include_dependencies=False,
             include_optional_dependencies=True,
             mods_dir=mods_dir,
             username=username,
