@@ -1,23 +1,27 @@
 # Advanced Energy Grid
 
-Advanced Energy Grid is a Factorio 2.1 + Space Age mod that makes electric distribution and long-distance transmission part of factory progression.
+Advanced Energy Grid is a Factorio 2.1 mod that makes electric distribution and long-distance transmission part of factory progression. Space Age is optional; with it installed, three of the ladders gain a further tier.
 
 Vanilla electric poles cover most factory needs very early. This mod adds staged pole, substation, and transmission upgrades so compact early grids grow into deliberate local distribution and long-distance backbone networks.
 
 ## Requirements
 
 - Factorio 2.1.
-- Space Age.
+- Optional Space Age integration, which extends the big pole, substation, and huge pole ladders by one tier.
 - Optional Power Overload integration when Power Overload 2.2.0 or newer is installed.
 
 ## Features
 
 - MK2 small electric pole for early local coverage.
 - MK2-MK4 medium electric poles for expanding factory-block distribution.
-- MK2-MK4 big electric poles for long-distance transmission.
-- MK2-MK4 substations for dense local distribution.
+- MK2-MK3 big electric poles for long-distance transmission, extended to MK4 under Space Age.
+- MK2-MK3 substations for dense local distribution, extended to MK4 under Space Age.
 - Split local distribution and distance transmission technology branches.
-- Optional Power Overload huge electric pole MK2-MK4 progression.
+- Optional Power Overload huge electric pole MK2 progression, extended to MK4 under Space Age.
+
+### Space Age Tiers
+
+The big pole MK4, substation MK4, and huge pole MK3-MK4 recipes call for superconductor, foundation, and quantum processor, so those tiers exist only when Space Age is installed. Every other tier, including the medium pole MK4, is available on base Factorio. Research that would otherwise need electromagnetic or cryogenic science is gated on space science instead when Space Age is absent.
 
 ## Companion Mods
 
