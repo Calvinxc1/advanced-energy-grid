@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 2026.08.23
+  Compatibility:
+    - Made Space Age an optional dependency, so the mod now loads on base Factorio 2.1.
+  Changes:
+    - Restricted the big electric pole MK4 and substation MK4 tiers to Space Age, since their recipes need superconductor and quantum processor.
+    - Restricted the huge electric pole MK3 and MK4 tiers to Space Age, since their recipes need superconductor, foundation, and quantum processor.
+    - Kept every other tier, including medium electric pole MK4, available without Space Age.
+    - Gated research that required electromagnetic or cryogenic science on space science instead when Space Age is absent.
+    - Stopped registering the Space Age pole tiers with Power Overload when Space Age is absent.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.0
 Date: 2026.07.25
   Changes:
