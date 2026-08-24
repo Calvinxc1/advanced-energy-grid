@@ -8,7 +8,7 @@ on:
 
 jobs:
   validate:
-    name: Validate Factorio mod
+    name: "Gate: Validate Factorio mod"
     runs-on: factorio-headless
     env:
       FACTORIO_BIN: /opt/factorio/bin/x64/factorio
@@ -56,6 +56,11 @@ jobs:
           AEG_REQUIRE_FACTORIO: "1"
         run: ./scripts/validate.sh
 
+      - name: Validate mod without Space Age
+        env:
+          AEG_REQUIRE_FACTORIO: "1"
+        run: ./scripts/factorio-validate-base-game.sh
+
       - name: Download and validate declared dependency mod list
         env:
           FACTORIO_MOD_PORTAL_USERNAME: ${{ secrets.FACTORIO_MOD_PORTAL_USERNAME }}
@@ -77,6 +82,12 @@ jobs:
           ln -s "$PWD/src" "$mods_dir/$mod_name"
           ln -s "$PWD/tests/fixtures/aeg-power-overload-compatibility-test" "$mods_dir/aeg-power-overload-compatibility-test"
           FACTORIO_MODS_DIR="$mods_dir" AEG_REQUIRE_FACTORIO=1 ./scripts/factorio-validate.sh
+
+          # The huge-pole ladder only exists alongside Power Overload, so its
+          # base-game branch is unreachable with the bare mod. Re-run the same
+          # dependency set with the expansion pinned off.
+          AEG_BASE_GAME_EXTRA_MODS_DIR="$mods_dir" AEG_REQUIRE_FACTORIO=1 \
+            ./scripts/factorio-validate-base-game.sh
 
       - name: Validate full mod family (AEG + AFI + API + dependencies)
         env:
