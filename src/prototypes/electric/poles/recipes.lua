@@ -2,7 +2,7 @@
 local small_electric_pole_mk2 = util.table.deepcopy(data.raw.recipe["small-electric-pole"])
 small_electric_pole_mk2.name = "aeg_small-electric-pole-2"
 small_electric_pole_mk2.enabled = false
-small_electric_pole_mk2.order = "a[energy]-a[small-electric-pole-2]"
+small_electric_pole_mk2.order = "a[small-electric-pole-2]"
 small_electric_pole_mk2.ingredients = {
   { type = "item", name = "small-electric-pole", amount = 2 },
   { type = "item", name = "electronic-circuit", amount = 2 },
@@ -17,7 +17,7 @@ data:extend({small_electric_pole_mk2})
 local medium_electric_pole_mk2 = util.table.deepcopy(data.raw.recipe["medium-electric-pole"])
 medium_electric_pole_mk2.name = "aeg_medium-electric-pole-2"
 medium_electric_pole_mk2.enabled = false
-medium_electric_pole_mk2.order = "a[energy]-b[medium-electric-pole-2]"
+medium_electric_pole_mk2.order = "b[medium-electric-pole-2]"
 medium_electric_pole_mk2.ingredients = {
   { type = "item", name = "medium-electric-pole", amount = 1 },
   { type = "item", name = "steel-plate", amount = 1 },
@@ -31,7 +31,7 @@ data:extend({medium_electric_pole_mk2})
 local medium_electric_pole_mk3 = util.table.deepcopy(data.raw.recipe["medium-electric-pole"])
 medium_electric_pole_mk3.name = "aeg_medium-electric-pole-3"
 medium_electric_pole_mk3.enabled = false
-medium_electric_pole_mk3.order = "a[energy]-b[medium-electric-pole-3]"
+medium_electric_pole_mk3.order = "b[medium-electric-pole-3]"
 medium_electric_pole_mk3.ingredients = {
   { type = "item", name = "aeg_medium-electric-pole-2", amount = 1 },
   { type = "item", name = "steel-plate", amount = 1 },
@@ -46,7 +46,7 @@ data:extend({medium_electric_pole_mk3})
 local medium_electric_pole_mk4 = util.table.deepcopy(data.raw.recipe["medium-electric-pole"])
 medium_electric_pole_mk4.name = "aeg_medium-electric-pole-4"
 medium_electric_pole_mk4.enabled = false
-medium_electric_pole_mk4.order = "a[energy]-b[medium-electric-pole-4]"
+medium_electric_pole_mk4.order = "b[medium-electric-pole-4]"
 medium_electric_pole_mk4.ingredients = {
   { type = "item", name = "aeg_medium-electric-pole-3", amount = 1 },
   { type = "item", name = "steel-plate", amount = 1 },
@@ -63,7 +63,7 @@ data:extend({medium_electric_pole_mk4})
 local big_electric_pole_mk2 = util.table.deepcopy(data.raw.recipe["big-electric-pole"])
 big_electric_pole_mk2.name = "aeg_big-electric-pole-2"
 big_electric_pole_mk2.enabled = false
-big_electric_pole_mk2.order = "a[energy]-c[big-electric-pole-2]"
+big_electric_pole_mk2.order = "a[big-electric-pole-2]"
 big_electric_pole_mk2.ingredients = {
   { type = "item", name = "big-electric-pole", amount = 1 },
   { type = "item", name = "steel-plate", amount = 3 },
@@ -77,7 +77,7 @@ data:extend({big_electric_pole_mk2})
 local big_electric_pole_mk3 = util.table.deepcopy(data.raw.recipe["big-electric-pole"])
 big_electric_pole_mk3.name = "aeg_big-electric-pole-3"
 big_electric_pole_mk3.enabled = false
-big_electric_pole_mk3.order = "a[energy]-c[big-electric-pole-3]"
+big_electric_pole_mk3.order = "a[big-electric-pole-3]"
 big_electric_pole_mk3.ingredients = {
   { type = "item", name = "aeg_big-electric-pole-2", amount = 1 },
   { type = "item", name = "steel-plate", amount = 3 },
@@ -95,7 +95,7 @@ data:extend({big_electric_pole_mk3})
 local substation_mk2 = util.table.deepcopy(data.raw.recipe["substation"])
 substation_mk2.name = "aeg_substation-2"
 substation_mk2.enabled = false
-substation_mk2.order = "a[energy]-d[substation-2]"
+substation_mk2.order = "c[substation-2]"
 substation_mk2.ingredients = {
   { type = "item", name = "substation", amount = 1 },
   { type = "item", name = "advanced-circuit", amount = 2 },
@@ -110,7 +110,7 @@ data:extend({substation_mk2})
 local substation_mk3 = util.table.deepcopy(data.raw.recipe["substation"])
 substation_mk3.name = "aeg_substation-3"
 substation_mk3.enabled = false
-substation_mk3.order = "a[energy]-d[substation-3]"
+substation_mk3.order = "c[substation-3]"
 substation_mk3.ingredients = {
   { type = "item", name = "aeg_substation-2", amount = 1 },
   { type = "item", name = "advanced-circuit", amount = 2 },
