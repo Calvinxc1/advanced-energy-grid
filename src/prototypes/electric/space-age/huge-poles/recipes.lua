@@ -1,7 +1,7 @@
 local huge_electric_pole_mk3_recipe = util.table.deepcopy(data.raw.recipe["po-huge-electric-pole"])
 huge_electric_pole_mk3_recipe.name = "aeg_huge-electric-pole-3"
 huge_electric_pole_mk3_recipe.enabled = false
-huge_electric_pole_mk3_recipe.order = "a[energy]-e[huge-electric-pole-3]"
+huge_electric_pole_mk3_recipe.order = "b[huge-electric-pole-3]"
 huge_electric_pole_mk3_recipe.ingredients = {
   { type = "item", name = "aeg_huge-electric-pole-2", amount = 1 },
   { type = "item", name = "copper-plate", amount = 15 },
@@ -19,7 +19,7 @@ huge_electric_pole_mk3_recipe.results = {
 local huge_electric_pole_mk4_recipe = util.table.deepcopy(data.raw.recipe["po-huge-electric-pole"])
 huge_electric_pole_mk4_recipe.name = "aeg_huge-electric-pole-4"
 huge_electric_pole_mk4_recipe.enabled = false
-huge_electric_pole_mk4_recipe.order = "a[energy]-e[huge-electric-pole-4]"
+huge_electric_pole_mk4_recipe.order = "b[huge-electric-pole-4]"
 huge_electric_pole_mk4_recipe.ingredients = {
   { type = "item", name = "aeg_huge-electric-pole-3", amount = 1 },
   { type = "item", name = "copper-plate", amount = 15 },
