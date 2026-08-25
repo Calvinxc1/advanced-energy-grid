@@ -1,4 +1,17 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 2026.08.24
+  Compatibility:
+    - Made Space Age an optional dependency, so the mod now loads on base Factorio 2.1.
+  Changes:
+    - Restricted the big electric pole MK4 and substation MK4 tiers to Space Age, since their recipes need superconductor and quantum processor.
+    - Restricted the huge electric pole MK3 and MK4 tiers to Space Age, since their recipes need superconductor, foundation, and quantum processor.
+    - Kept every other tier, including medium electric pole MK4, available without Space Age.
+    - Gated research that required electromagnetic or cryogenic science on space science instead when Space Age is absent.
+    - Stopped registering the Space Age pole tiers with Power Overload when Space Age is absent.
+    - Split the single pole row in the crafting menu into a local distribution row holding small poles, medium poles and substations, and a distance transmission row holding big poles and huge poles. Every tier of a family now sits in one row in tier order, starting from its vanilla tier.
+    - Moved both pole rows to sit directly after the pipe row in the Logistics tab. The single row they replace sat above belts and inserters.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.0
 Date: 2026.07.25
   Changes:

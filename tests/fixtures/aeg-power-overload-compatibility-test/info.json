@@ -6,6 +6,7 @@
   "factorio_version": "2.1",
   "dependencies": [
     "advanced-energy-grid >= 0.2.0",
-    "PowerOverload"
+    "PowerOverload",
+    "? space-age"
   ]
 }

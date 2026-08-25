@@ -1,3 +1,5 @@
+local optional_dependencies = require("prototypes.electric.optional-dependencies")
+
 local medium_pole_technology_icon = "__advanced-energy-grid__/graphics/technology/medium-electric-pole.png"
 local big_pole_technology_icon = "__advanced-energy-grid__/graphics/technology/big-electric-pole.png"
 local substation_technology_icon = "__advanced-energy-grid__/graphics/technology/electric-substation.png"
@@ -126,15 +128,7 @@ substation_mk3.prerequisites = {
     "aeg_local-energy-distribution-elite",
 }
 substation_mk3.unit.count = 200
-substation_mk3.unit.ingredients = {
-    {"automation-science-pack", 1},
-    {"logistic-science-pack", 1},
-    {"chemical-science-pack", 1},
-    {"production-science-pack", 1},
-    {"utility-science-pack", 1},
-    {"space-science-pack", 1},
-    {"electromagnetic-science-pack", 1},
-}
+substation_mk3.unit.ingredients = optional_dependencies.electromagnetic_unit_ingredients()
 substation_mk3.unit.time = 45
 substation_mk3.order = "c-e-b-5"
 substation_mk3.upgrade = false
@@ -148,49 +142,15 @@ medium_pole_mk4.effects = {
 }
 medium_pole_mk4.prerequisites = {
     "aeg_local-energy-distribution-advanced",
-    "electromagnetic-science-pack",
+    optional_dependencies.electromagnetic_prerequisite(),
 }
 medium_pole_mk4.unit.count = 150
-medium_pole_mk4.unit.ingredients = {
-    {"automation-science-pack", 1},
-    {"logistic-science-pack", 1},
-    {"chemical-science-pack", 1},
-    {"production-science-pack", 1},
-    {"utility-science-pack", 1},
-    {"space-science-pack", 1},
-    {"electromagnetic-science-pack", 1},
-}
+medium_pole_mk4.unit.ingredients = optional_dependencies.electromagnetic_unit_ingredients()
 medium_pole_mk4.unit.time = 30
 medium_pole_mk4.order = "c-e-b-6"
 medium_pole_mk4.upgrade = false
 data:extend({medium_pole_mk4})
 
-local substation_mk4 = util.table.deepcopy(data.raw.technology["electric-energy-distribution-2"])
-substation_mk4.name = "aeg_improved-local-energy-distribution-elite"
-use_locale_and_icon(substation_mk4, substation_technology_icon)
-substation_mk4.effects = {
-    {type = "unlock-recipe", recipe = "aeg_substation-4"},
-}
-substation_mk4.prerequisites = {
-    "aeg_improved-local-energy-distribution-advanced",
-    "cryogenic-science-pack",
-    "quantum-processor",
-}
-substation_mk4.unit.count = 200
-substation_mk4.unit.ingredients = {
-    {"automation-science-pack", 1},
-    {"logistic-science-pack", 1},
-    {"chemical-science-pack", 1},
-    {"production-science-pack", 1},
-    {"utility-science-pack", 1},
-    {"space-science-pack", 1},
-    {"electromagnetic-science-pack", 1},
-    {"cryogenic-science-pack", 1},
-}
-substation_mk4.unit.time = 45
-substation_mk4.order = "c-e-b-7"
-substation_mk4.upgrade = false
-data:extend({substation_mk4})
 
 -- transmission: big poles into huge poles when Power Overload is present
 local big_pole_mk2 = util.table.deepcopy(data.raw.technology["electric-energy-distribution-1"])
@@ -238,27 +198,3 @@ big_pole_mk3.order = "c-e-c-4"
 big_pole_mk3.upgrade = false
 data:extend({big_pole_mk3})
 
-local big_pole_mk4 = util.table.deepcopy(data.raw.technology["electric-energy-distribution-1"])
-big_pole_mk4.name = "aeg_distance-power-transmission-elite"
-use_locale_and_icon(big_pole_mk4, big_pole_technology_icon)
-big_pole_mk4.effects = {
-    {type = "unlock-recipe", recipe = "aeg_big-electric-pole-4"},
-}
-big_pole_mk4.prerequisites = {
-    "aeg_distance-power-transmission-advanced",
-    "electromagnetic-science-pack",
-}
-big_pole_mk4.unit.count = 150
-big_pole_mk4.unit.ingredients = {
-    {"automation-science-pack", 1},
-    {"logistic-science-pack", 1},
-    {"chemical-science-pack", 1},
-    {"production-science-pack", 1},
-    {"utility-science-pack", 1},
-    {"space-science-pack", 1},
-    {"electromagnetic-science-pack", 1},
-}
-big_pole_mk4.unit.time = 30
-big_pole_mk4.order = "c-e-c-6"
-big_pole_mk4.upgrade = false
-data:extend({big_pole_mk4})

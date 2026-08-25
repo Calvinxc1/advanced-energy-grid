@@ -1,15 +1,15 @@
 {
   "name": "advanced-energy-grid",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "factorio_version": "2.1",
   "title": "Advanced Energy Grid",
   "author": "Jason M. Cherry",
   "contact": "https://github.com/Calvinxc1/advanced-energy-grid/issues",
   "homepage": "https://github.com/Calvinxc1/advanced-energy-grid",
-  "description": "Adds staged electric pole, substation, long-distance transmission, and optional Power Overload huge-pole progression for Factorio 2.1 and Space Age.",
+  "description": "Adds staged electric pole, substation, long-distance transmission, and optional Power Overload huge-pole progression for Factorio 2.1. Space Age is optional and extends the big-pole, substation, and huge-pole ladders with a further tier.",
   "dependencies": [
     "base >= 2.1.0",
-    "space-age >= 2.1.0",
+    "? space-age >= 2.1.0",
     "? PowerOverload >= 2.2.0"
   ]
 }
