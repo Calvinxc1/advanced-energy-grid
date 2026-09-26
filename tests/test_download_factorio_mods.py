@@ -4,8 +4,11 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from pathlib import Path
+import tempfile
 import unittest
+import zipfile
 from unittest.mock import patch
 
 
@@ -178,6 +181,57 @@ class DependencyCycleTest(unittest.TestCase):
                     completed=set(),
                     active_chain=[],
                 )
+
+
+class CacheDirTest(unittest.TestCase):
+    def test_cached_release_is_linked_without_downloading(self) -> None:
+        # Overlapping closures (Krastorio 2 under several load tests, say)
+        # share one archive: a release already in the cache is verified and
+        # linked into the mods directory rather than fetched again.
+        release = {"file_name": "cached-mod_1.2.3.zip", "version": "1.2.3", "download_url": "/download"}
+        with tempfile.TemporaryDirectory() as temporary:
+            cache_dir, mods_dir = Path(temporary) / "cache", Path(temporary) / "mods"
+            cache_dir.mkdir()
+            mods_dir.mkdir()
+            with zipfile.ZipFile(cache_dir / release["file_name"], "w") as archive:
+                archive.writestr(
+                    "cached-mod_1.2.3/info.json", json.dumps({"name": "cached-mod", "version": "1.2.3"})
+                )
+
+            with patch.object(DOWNLOADER.urllib.request, "urlopen") as urlopen:
+                DOWNLOADER.download_release("cached-mod", release, mods_dir, "user", "token", cache_dir)
+
+            urlopen.assert_not_called()
+            linked = mods_dir / release["file_name"]
+            self.assertTrue(linked.is_symlink())
+            self.assertEqual(linked.resolve(), (cache_dir / release["file_name"]).resolve())
+
+    def test_closure_passes_the_cache_to_every_release(self) -> None:
+        releases = {
+            "root": {"info_json": {"dependencies": ["required-dependency"]}},
+            "required-dependency": {"info_json": {"dependencies": []}},
+        }
+        cache_dir = Path("/tmp/cache")
+
+        with patch.object(
+            DOWNLOADER, "latest_compatible_release", side_effect=lambda name, _: releases[name]
+        ), patch.object(DOWNLOADER, "download_release") as download_release:
+            DOWNLOADER.download_mod_closure(
+                "root",
+                factorio_version="2.1",
+                include_dependencies=True,
+                include_optional_dependencies=False,
+                mods_dir=Path("/tmp/mods"),
+                username="user",
+                token="token",
+                completed=set(),
+                active_chain=[],
+                cache_dir=cache_dir,
+            )
+
+        self.assertEqual([call.args[0] for call in download_release.call_args_list], ["required-dependency", "root"])
+        for call in download_release.call_args_list:
+            self.assertEqual(call.args[5], cache_dir)
 
 
 if __name__ == "__main__":

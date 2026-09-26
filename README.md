@@ -79,6 +79,14 @@ The validator checks JSON, governance YAML when available, Lua syntax, the Facto
 AEG_REQUIRE_FACTORIO=1 ./scripts/validate.sh
 ```
 
+To load the mod alongside Krastorio 2 Spaced Out, Krastorio 2, Space Exploration, and Space Exploration with Krastorio 2 (each with Power Overload and the pole registration assertions), set `FACTORIO_MOD_PORTAL_USERNAME` and `FACTORIO_MOD_PORTAL_TOKEN` and run:
+
+```sh
+./scripts/validate-overhauls.sh
+```
+
+It downloads each overhaul with its required mods; set `AEG_OVERHAUL_CACHE_DIR` to keep the archives between runs.
+
 Pull requests run the same required validation through Gitea Actions in `.gitea/workflows/ci.yml`. The runner must provide a Factorio executable through `FACTORIO_BIN`, `PATH`, or the default Steam install path used by `scripts/factorio-validate.sh`.
 
 ## License

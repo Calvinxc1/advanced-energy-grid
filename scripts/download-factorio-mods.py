@@ -119,7 +119,25 @@ def archive_metadata(archive_path: Path) -> dict:
         raise DownloadError(f"Downloaded archive is not a valid ZIP: {archive_path.name}") from error
 
 
-def download_release(mod_name: str, release: dict, mods_dir: Path, username: str, token: str) -> None:
+def download_release(
+    mod_name: str,
+    release: dict,
+    mods_dir: Path,
+    username: str,
+    token: str,
+    cache_dir: Path | None = None,
+) -> None:
+    # With a cache, the archive is fetched into (or found in) the cache and
+    # linked into mods_dir, so several mods directories built from overlapping
+    # closures share one download of each release.
+    if cache_dir is not None and cache_dir.resolve() != mods_dir.resolve():
+        download_release(mod_name, release, cache_dir, username, token)
+        filename = Path(release.get("file_name", "")).name
+        destination = mods_dir / filename
+        if not destination.exists():
+            destination.symlink_to((cache_dir / filename).resolve())
+        return
+
     filename = Path(release.get("file_name", "")).name
     if not filename.endswith(".zip"):
         raise DownloadError(f"Mod Portal returned an invalid archive name for {mod_name}")
@@ -168,6 +186,7 @@ def download_mod_closure(
     token: str,
     completed: set[str],
     active_chain: list[str],
+    cache_dir: Path | None = None,
 ) -> None:
     if mod_name in completed:
         return
@@ -191,8 +210,9 @@ def download_mod_closure(
                     token=token,
                     completed=completed,
                     active_chain=active_chain,
+                    cache_dir=cache_dir,
                 )
-        download_release(mod_name, release, mods_dir, username, token)
+        download_release(mod_name, release, mods_dir, username, token, cache_dir)
         completed.add(mod_name)
     finally:
         active_chain.pop()
@@ -268,6 +288,11 @@ def parse_args() -> argparse.Namespace:
         help="Recursively download required and recommended Mod Portal dependencies.",
     )
     parser.add_argument(
+        "--cache-dir",
+        type=Path,
+        help="Keep downloaded archives here and link them into --mods-dir, reusing any already present.",
+    )
+    parser.add_argument(
         "--include-optional-dependencies",
         action="store_true",
         help="Include optional dependencies when used with --mod --with-dependencies.",
@@ -286,6 +311,8 @@ def main() -> int:
             "FACTORIO_MOD_PORTAL_USERNAME and FACTORIO_MOD_PORTAL_TOKEN must be set in the environment"
         )
     args.mods_dir.mkdir(parents=True, exist_ok=True)
+    if args.cache_dir:
+        args.cache_dir.mkdir(parents=True, exist_ok=True)
     if args.from_info:
         info = read_info_json(args.from_info)
         factorio_version = args.factorio_version or info.get("factorio_version", "2.1")
@@ -310,6 +337,7 @@ def main() -> int:
                 token=token,
                 completed=completed,
                 active_chain=[],
+                cache_dir=args.cache_dir,
             )
     return 0
 
