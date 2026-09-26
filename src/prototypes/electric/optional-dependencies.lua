@@ -96,8 +96,8 @@ end
 --   Space Exploration    holmium processing: space      energy science 1, SE's
 --                        science and SE's first          own electrical line
 --                        off-world electrical metal
---   SE with Krastorio 2  space science, the step after  energy science 1
---                        mk3, with K2's elite materials
+--                        (with Krastorio 2 too, where
+--                        the tiers use K2's materials)
 --   Krastorio 2          lithium-sulfur battery and     matter tech card, where
 --                        rare metals, K2's late          K2 puts imersium and
 --                        pre-rocket content              the energy control unit
@@ -123,8 +123,7 @@ local function gate(stage)
              packs = { "space-science-pack", "electromagnetic-science-pack" } }
   elseif optional_dependencies.has_space_exploration then
     if stage == "elite" then
-      local technology = optional_dependencies.has_krastorio2 and "space-science-pack" or "se-processing-holmium"
-      return { technologies = { technology },
+      return { technologies = { "se-processing-holmium" },
                packs = { "space-science-pack", "se-rocket-science-pack" } }
     end
     return { technologies = { "se-energy-science-pack-1" },
