@@ -1,7 +1,8 @@
--- Space Age mk3 and mk4 tiers for the huge-pole ladder. Their recipes need
--- superconductor, foundation, and quantum processor, so they cannot exist in a
--- base-game load. prototypes/electric/huge-poles/entities.lua terminates the
--- ladder at mk2; this file extends it.
+-- Late mk3 and mk4 tiers for the huge-pole ladder. They exist whenever Space
+-- Age or an overhaul supplies materials for them (see
+-- optional_dependencies.late_tier_source); the recipes and technologies come
+-- from that source's directory. prototypes/electric/huge-poles/entities.lua
+-- terminates the ladder at mk2; this file extends it.
 
 local huge_pole_mk3_entity = util.table.deepcopy(data.raw["electric-pole"]["po-huge-electric-pole"])
 huge_pole_mk3_entity.name = "aeg_huge-electric-pole-3"

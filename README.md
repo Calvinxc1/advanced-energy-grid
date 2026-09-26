@@ -1,6 +1,6 @@
 # Advanced Energy Grid
 
-Advanced Energy Grid is a Factorio 2.1 mod that makes electric distribution and long-distance transmission part of factory progression. Space Age is optional; with it installed, three of the ladders gain a further tier.
+Advanced Energy Grid is a Factorio 2.1 mod that makes electric distribution and long-distance transmission part of factory progression. Space Age is optional; with it, or with Krastorio 2 or Space Exploration, three of the ladders gain a further tier.
 
 Vanilla electric poles cover most factory needs very early. This mod adds staged pole, substation, and transmission upgrades so compact early grids grow into deliberate local distribution and long-distance backbone networks.
 
@@ -8,20 +8,21 @@ Vanilla electric poles cover most factory needs very early. This mod adds staged
 
 - Factorio 2.1.
 - Optional Space Age integration, which extends the big pole, substation, and huge pole ladders by one tier.
+- Optional Krastorio 2 (including Krastorio 2 Spaced Out) and Space Exploration compatibility.
 - Optional Power Overload integration when Power Overload 2.2.0 or newer is installed.
 
 ## Features
 
 - MK2 small electric pole for early local coverage.
 - MK2-MK4 medium electric poles for expanding factory-block distribution.
-- MK2-MK3 big electric poles for long-distance transmission, extended to MK4 under Space Age.
-- MK2-MK3 substations for dense local distribution, extended to MK4 under Space Age.
+- MK2-MK3 big electric poles for long-distance transmission, extended to MK4 under Space Age or an overhaul.
+- MK2-MK3 substations for dense local distribution, extended to MK4 under Space Age or an overhaul.
 - Split local distribution and distance transmission technology branches.
-- Optional Power Overload huge electric pole MK2 progression, extended to MK4 under Space Age.
+- Optional Power Overload huge electric pole MK2 progression, extended to MK4 under Space Age or an overhaul.
 
-### Space Age Tiers
+### Late Tiers
 
-The big pole MK4, substation MK4, and huge pole MK3-MK4 recipes call for superconductor, foundation, and quantum processor, so those tiers exist only when Space Age is installed. Every other tier, including the medium pole MK4, is available on base Factorio. Research that would otherwise need electromagnetic or cryogenic science is gated on space science instead when Space Age is absent.
+The big pole MK4, substation MK4, and huge pole MK3-MK4 are the late tiers. Under Space Age their recipes call for superconductor, foundation, and quantum processor; under Krastorio 2 or Space Exploration they use that overhaul's materials instead. Without any of these, those tiers do not exist. Every other tier, including the medium pole MK4, is available on base Factorio. Research that would otherwise need electromagnetic science is gated on space science in the base game, the matter tech card under Krastorio 2, and energy science 1 under Space Exploration.
 
 ## Companion Mods
 
@@ -43,6 +44,15 @@ Current pole behavior is documented in [docs/electric-grid-benchmark.md](docs/el
 ## Compatibility
 
 Advanced Energy Grid registers its upgraded electric poles with Power Overload 2.2.0 or newer so they receive configurable overload limits and tooltips. Power Overload remains optional; without it, the AEG pole progression still loads without overload behavior.
+
+### Krastorio 2 and Space Exploration
+
+The mod's reach and coverage numbers carry under an overhaul, while recipes and unlocks follow the overhaul where it has its own:
+
+- Krastorio 2 raises the vanilla poles' reach and coverage; they are set back to the first rung of each ladder, so every tier above them is still an upgrade. K2's recipes for them are kept.
+- Krastorio 2's superior substation is the substation MK4. Its recipe takes a substation MK3 in place of a substation, and its technology follows the substation MK3 technology.
+- Under Krastorio 2 the late tiers use the energy control unit, imersium beam, and AI core. Under Space Exploration they use holmium cable, superconductive cable, heavy composite, and quantum processor. With both, Krastorio 2's materials are used and Space Exploration re-tiers them.
+- With Power Overload, which raises its own Tier 1 limits under Krastorio 2, each AEG tier keeps doubling the tier below, starting from the Krastorio 2 Tier 1 limit.
 
 ## Installation
 

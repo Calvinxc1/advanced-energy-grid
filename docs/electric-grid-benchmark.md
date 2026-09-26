@@ -22,7 +22,7 @@ Assumptions:
 | Medium Electric Pole MK2 | local distribution | AEG | `13` | `4.5` | Local energy distribution 2 | larger midgame factory blocks | `120MW` |
 | Medium Electric Pole MK3 | local distribution | AEG | `15` | `5.5` | Local energy distribution 3 | late surface factory blocks | `240MW` |
 | Medium Electric Pole MK4 | local distribution | AEG | `17` | `6.5` | Local energy distribution 4 | Space Age local distribution | `480MW` |
-| Big Electric Pole | distance transmission | base | `30` | `2` | Split energy distribution | early long-distance power lines | Tier 1 limit when Power Overload is installed |
+| Big Electric Pole | distance transmission | base | `32` | `2` | Split energy distribution | early long-distance power lines | Tier 1 limit when Power Overload is installed |
 | Big Electric Pole MK2 | distance transmission | AEG | `38` | `2` | Distance power transmission 2 | midgame transmission lines | `600MW` |
 | Big Electric Pole MK3 | distance transmission | AEG | `44` | `2.25` | Distance power transmission 3 | late surface transmission | `1.2GW` |
 | Big Electric Pole MK4 | distance transmission | AEG | `50` | `2.5` | Distance power transmission 4 | Space Age transmission | `2.4GW` |
@@ -47,6 +47,7 @@ Assumptions:
 
 ## Compatibility Notes
 
-- Space Age is required.
+- Space Age is optional. The big pole MK4, substation MK4, and huge pole MK3-MK4 exist under Space Age, Krastorio 2, or Space Exploration.
+- Under Krastorio 2 the vanilla poles keep the values in the table above, the substation MK4 is Krastorio 2's superior substation, and the Power Overload limits double from Krastorio 2's Tier 1 limits (for example big pole MK2-MK4 at `4GW`, `8GW`, `16GW`).
 - Power Overload is optional.
 - When Power Overload 2.2.0 or newer is installed, Advanced Energy Grid adds upgraded huge poles, adjusts the Tier 1 huge pole into the distance transmission branch, and registers AEG poles for overload limits.
