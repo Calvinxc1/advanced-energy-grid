@@ -95,14 +95,18 @@ end
 --   Space Age            electromagnetic science        (same)
 --   Space Exploration    energy science 1, SE's own     (same)
 --                        electrical line
+--   SE with Krastorio 2  space science, the step after  energy science 1
+--                        mk3, with K2's elite materials
 --   Krastorio 2          lithium-sulfur battery and     matter tech card, where
 --                        rare metals, K2's late          K2 puts imersium and
 --                        pre-rocket content              the energy control unit
 --   base game            space science                  (same)
 --
--- Only Krastorio 2 separates them: its matter card comes after the singularity
+-- Krastorio 2 separates them: its matter card comes after the singularity
 -- lab, so gating the elite tier there would leave the whole rocket-to-matter
--- stretch without a pole upgrade. Each gate is a set of technologies to follow
+-- stretch without a pole upgrade. Under SE with K2 one gate would put six
+-- tiers (and the pylon right after) on energy science 1 at once, so the elite
+-- tier comes a step earlier there. Each gate is a set of technologies to follow
 -- and a set of packs to add to the research unit.
 local BASE_PACKS = {
   { "automation-science-pack", 1 },
@@ -117,6 +121,10 @@ local function gate(stage)
     return { technologies = { "electromagnetic-science-pack" },
              packs = { "space-science-pack", "electromagnetic-science-pack" } }
   elseif optional_dependencies.has_space_exploration then
+    if stage == "elite" and optional_dependencies.has_krastorio2 then
+      return { technologies = { "space-science-pack" },
+               packs = { "space-science-pack", "se-rocket-science-pack" } }
+    end
     return { technologies = { "se-energy-science-pack-1" },
              packs = { "space-science-pack", "se-rocket-science-pack", "se-energy-science-pack-1" } }
   elseif optional_dependencies.has_krastorio2 then
