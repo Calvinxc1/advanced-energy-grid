@@ -154,7 +154,15 @@ for _, tier_technology in pairs({
 }) do
   local supplied = data.raw.technology[optional_dependencies.name(tier_technology)]
   if supplied and supplied.unit and not optional_dependencies.builds(tier_technology) then
-    table.insert(gated, supplied)
+    -- Only once it has been fitted onto this mod's ladder. SE's pylon is,
+    -- only with Power Overload (whose huge pole the ladder is built on);
+    -- without it the pylon is SE's alone and keeps SE's cost.
+    for _, prerequisite_name in pairs(supplied.prerequisites or {}) do
+      if string.sub(prerequisite_name, 1, 4) == "aeg_" then
+        table.insert(gated, supplied)
+        break
+      end
+    end
   end
 end
 
