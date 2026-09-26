@@ -16,7 +16,8 @@
 -- own collision mask, and Factorio requires an upgrade target to share its
 -- source's.
 
-local name = require("prototypes.electric.optional-dependencies").name
+local optional_dependencies = require("prototypes.electric.optional-dependencies")
+local name = optional_dependencies.name
 
 local pylon = name("aeg_huge-electric-pole-4")
 local recipe = data.raw.recipe[pylon]
@@ -29,4 +30,11 @@ end
 if technology and data.raw.technology["aeg_improved-distance-power-transmission-advanced"] then
   technology.prerequisites = technology.prerequisites or {}
   table.insert(technology.prerequisites, "aeg_improved-distance-power-transmission-advanced")
+end
+
+-- Without Krastorio 2 the huge pole mk2, an elite tier, takes holmium plate
+-- like the other elite tiers (prototypes/electric/space-exploration.lua).
+local huge_pole_mk2 = data.raw.recipe["aeg_huge-electric-pole-2"]
+if huge_pole_mk2 and not optional_dependencies.has_krastorio2 then
+  table.insert(huge_pole_mk2.ingredients, { type = "item", name = "se-holmium-plate", amount = 10 })
 end

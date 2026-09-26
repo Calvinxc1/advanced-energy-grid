@@ -2,12 +2,14 @@
 -- Age; with K2 present, prototypes/electric/krastorio2/ supplies them.) The
 -- Space Age recipes map role for role onto SE's materials, at two levels:
 --
---   elite tiers (Space Age: electromagnetic science), gated on energy science 1
+--   big pole mk4 (Space Age: electromagnetic science), gated on energy
+--   science 1 like the huge pole mk3
 --     superconductor                 -> holmium cable
---   cryogenic tiers (Space Age: cryogenic science), SE tier 3
---     superconductor                 -> superconductive cable
---     foundation (structure)         -> heavy composite
---     quantum processor              -> quantum processor
+--   substation mk4 (Space Age: cryogenic science), gated on energy science 2
+--     superconductor, quantum processor -> holmium solenoid
+--   The substation mk4 sits beside SE's pylon substation, which is built on
+--   the same solenoid; at SE tier 3 it would arrive after that far stronger
+--   substation. (The huge pole mk4 is SE's pylon.)
 
 local builders = require("prototypes.electric.late-tiers.builders")
 local item = builders.item
@@ -24,8 +26,7 @@ builders.recipe("aeg_substation-4", "substation", "c[substation-4]", {
   item("aeg_substation-3", 1),
   item("advanced-circuit", 2),
   item("processing-unit", 5),
-  item("se-superconductive-cable", 10),
-  item("se-quantum-processor", 2),
+  item("se-holmium-solenoid", 4),
   item("steel-plate", 10),
   item("copper-plate", 5),
 })

@@ -21,8 +21,7 @@ builders.technology({
   recipe = "aeg_substation-4",
   prerequisites = {
     "aeg_improved-local-energy-distribution-advanced",
-    "se-superconductive-cable",
-    "se-quantum-processor",
+    "se-holmium-solenoid",
   },
   count = 200,
   ingredients = optional_dependencies.unit_ingredients("late"),

@@ -93,8 +93,9 @@ end
 --
 --                        elite                          late
 --   Space Age            electromagnetic science        (same)
---   Space Exploration    energy science 1, SE's own     (same)
---                        electrical line
+--   Space Exploration    holmium processing: space      energy science 1, SE's
+--                        science and SE's first          own electrical line
+--                        off-world electrical metal
 --   SE with Krastorio 2  space science, the step after  energy science 1
 --                        mk3, with K2's elite materials
 --   Krastorio 2          lithium-sulfur battery and     matter tech card, where
@@ -104,9 +105,9 @@ end
 --
 -- Krastorio 2 separates them: its matter card comes after the singularity
 -- lab, so gating the elite tier there would leave the whole rocket-to-matter
--- stretch without a pole upgrade. Under SE with K2 one gate would put six
--- tiers (and the pylon right after) on energy science 1 at once, so the elite
--- tier comes a step earlier there. Each gate is a set of technologies to follow
+-- stretch without a pole upgrade. Under Space Exploration one gate would put
+-- five or six tiers (and the pylon right after) on energy science 1 at once,
+-- so the elite tier comes a step earlier there. Each gate is a set of technologies to follow
 -- and a set of packs to add to the research unit.
 local BASE_PACKS = {
   { "automation-science-pack", 1 },
@@ -121,8 +122,9 @@ local function gate(stage)
     return { technologies = { "electromagnetic-science-pack" },
              packs = { "space-science-pack", "electromagnetic-science-pack" } }
   elseif optional_dependencies.has_space_exploration then
-    if stage == "elite" and optional_dependencies.has_krastorio2 then
-      return { technologies = { "space-science-pack" },
+    if stage == "elite" then
+      local technology = optional_dependencies.has_krastorio2 and "space-science-pack" or "se-processing-holmium"
+      return { technologies = { technology },
                packs = { "space-science-pack", "se-rocket-science-pack" } }
     end
     return { technologies = { "se-energy-science-pack-1" },

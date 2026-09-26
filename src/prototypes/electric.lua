@@ -19,4 +19,6 @@ end
 
 if optional_dependencies.has_krastorio2 then
   require("prototypes.electric.krastorio2")
+elseif optional_dependencies.has_space_exploration then
+  require("prototypes.electric.space-exploration")
 end
