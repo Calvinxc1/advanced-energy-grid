@@ -12,6 +12,9 @@ dependency_stack:
   - space-age >= 2.1.0
 optional_dependencies:
   - PowerOverload >= 2.2.0
+  - Krastorio2
+  - Krastorio2-spaced-out
+  - space-exploration
 upstream_or_fork_source: local Factorio mod workspace for Jason M. Cherry
 scope_boundaries:
   - Owns electric poles, substations, long-distance transmission, electric distribution/transmission technologies, recipes, items, and entities for grid infrastructure.
@@ -25,7 +28,12 @@ validation_available:
   lint: not established beyond JSON, YAML, and Lua syntax checks
   format: not established
   factorio_load: ./scripts/validate.sh delegates to ./scripts/factorio-validate.sh when Factorio and mod symlink are available
+  overhaul_load: ./scripts/validate-overhauls.sh loads Krastorio 2 Spaced Out, Krastorio 2, Space Exploration, and SE with K2, each with Power Overload and the registration fixture; needs Mod Portal credentials (CI runs it)
 workspace_specific_rules:
+  - "SE's se-pylon is the huge pole mk4 under Space Exploration with Power Overload (Jason, 2026-09-26): optional_dependencies.name maps aeg_huge-electric-pole-4 and its technology onto se-pylon, whose recipe takes aeg_huge-electric-pole-3 and whose technology follows the huge mk3 technology and inherits its packs (src/prototypes/electric/space-exploration-updates.lua). The pylon keeps SE's stats and menu row (SE's blueprint converter swaps within a row) and is not the mk3's next_upgrade, because SE gives space-capable poles their own collision mask. Power Overload registers se-pylon itself, so this mod does not."
+  - "Krastorio 2 (? Krastorio2, and Spaced Out through it) and Space Exploration (? space-exploration) are optional dependencies, set by Jason on 2026-09-25. This mod's reach and coverage numbers carry; K2's recipes and unlocks for its own poles are kept. K2 raises the vanilla poles in its data-updates, so src/prototypes/electric/krastorio2-updates.lua sets them back to the first rung of each ladder. K2's kr-superior-substation is the substation mk4 (optional_dependencies.name maps aeg_substation-4 and its technology onto K2's): its recipe takes aeg_substation-3 in place of substation and electric-energy-distribution-3 follows the substation mk3 technology."
+  - "The late tiers (big pole mk4, substation mk4, huge pole mk3/mk4) exist under Space Age, Krastorio 2 or Space Exploration. Their entities and items live in src/prototypes/electric/late-tiers/, with recipes and technologies from the first of space-age/, krastorio2/, space-exploration/ that applies. The elite gate (medium pole mk4, substation mk3, huge pole mk2) and late gate (big pole mk4, huge pole mk3) are both electromagnetic science (Space Age) or space science (base game); K2 and SE split them, elite on kr-lithium-sulfur-battery plus kr-rare-metal-processing and late on the matter tech card. Under SE, with or without K2, the elite gate is holmium processing and the late gate energy science 1 (Jason, 2026-09-26), so the elite and late tiers do not all unlock at energy science 1. SE alone builds the tiers from SE materials one per rung (concrete at mk2, holmium plate on the elite tier, holmium cable on the late tier; src/prototypes/electric/space-exploration.lua), and its substation mk4 uses holmium solenoid at energy science 2 so it arrives alongside SE's pylon substation rather than after it. Under K2 the mk2 and mk3 recipes use K2 intermediates, one new material per rung (steel beams, then rare metals, electronic components and lithium-sulfur batteries), so the ladder climbs through K2's progression; Jason chose this on 2026-09-26 to smooth the jump into K2 content at mk4. Every aeg technology waits on whatever unlocks its recipes' ingredients (src/prototypes/electric/technology-fixes.lua). Overhaul tier technologies inherit their prerequisites' packs unless no lab accepts the result (K2 with Space Age splits its labs)."
+  - "Under Power Overload each tier's default doubles the tier below, starting from Power Overload's Tier 1 default for the load; Power Overload raises those under Krastorio 2 (small 20MW, medium 200MW, big 2GW, substation 400MW, huge 10GW), and kr-superior-substation is registered as the substation mk4. Jason chose this on 2026-09-25."
   - Preserve src/info.json dependencies unless Jason explicitly changes the mod dependency contract.
   - Keep Power Overload integration optional.
   - Do not publish, tag, package, upload, release, or push unless Jason explicitly asks.

@@ -1,6 +1,6 @@
 # Advanced Energy Grid
 
-Advanced Energy Grid is a Factorio 2.1 mod that adds staged electric grid infrastructure progression. Space Age is optional and extends the big pole, substation, and huge pole ladders by one tier.
+Advanced Energy Grid is a Factorio 2.1 mod that adds staged electric grid infrastructure progression. Space Age is optional and extends the big pole, substation, and huge pole ladders by one tier. Krastorio 2 (including Spaced Out) and Space Exploration are supported, and also extend those ladders using their own materials.
 
 The mod adds upgraded small electric poles, medium electric poles, big electric poles, and substations. When Power Overload is installed, it also adds MK2-MK4 huge electric poles as an optional long-distance backbone branch.
 

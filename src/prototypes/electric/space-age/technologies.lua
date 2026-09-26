@@ -1,3 +1,5 @@
+local optional_dependencies = require("prototypes.electric.optional-dependencies")
+
 local big_pole_technology_icon = "__advanced-energy-grid__/graphics/technology/big-electric-pole.png"
 local substation_technology_icon = "__advanced-energy-grid__/graphics/technology/electric-substation.png"
 
@@ -36,28 +38,33 @@ big_pole_mk4.unit.time = 30
 big_pole_mk4.order = "c-e-c-6"
 data:extend({big_pole_mk4})
 
-local substation_mk4 = util.table.deepcopy(data.raw.technology["electric-energy-distribution-2"])
-substation_mk4.name = "aeg_improved-local-energy-distribution-elite"
-use_locale_and_icon(substation_mk4, substation_technology_icon)
-substation_mk4.effects = {
-    {type = "unlock-recipe", recipe = "aeg_substation-4"},
-}
-substation_mk4.prerequisites = {
-    "aeg_improved-local-energy-distribution-advanced",
-    "cryogenic-science-pack",
-    "quantum-processor",
-}
-substation_mk4.unit.count = 200
-substation_mk4.unit.ingredients = {
-    {"automation-science-pack", 1},
-    {"logistic-science-pack", 1},
-    {"chemical-science-pack", 1},
-    {"production-science-pack", 1},
-    {"utility-science-pack", 1},
-    {"space-science-pack", 1},
-    {"electromagnetic-science-pack", 1},
-    {"cryogenic-science-pack", 1},
-}
-substation_mk4.unit.time = 45
-substation_mk4.order = "c-e-b-7"
-data:extend({substation_mk4})
+-- Under Krastorio 2 the substation mk4 is unlocked by K2's own technology;
+-- see prototypes/electric/krastorio2.lua.
+if optional_dependencies.name("aeg_improved-local-energy-distribution-elite")
+    == "aeg_improved-local-energy-distribution-elite" then
+  local substation_mk4 = util.table.deepcopy(data.raw.technology["electric-energy-distribution-2"])
+  substation_mk4.name = "aeg_improved-local-energy-distribution-elite"
+  use_locale_and_icon(substation_mk4, substation_technology_icon)
+  substation_mk4.effects = {
+      {type = "unlock-recipe", recipe = "aeg_substation-4"},
+  }
+  substation_mk4.prerequisites = {
+      "aeg_improved-local-energy-distribution-advanced",
+      "cryogenic-science-pack",
+      "quantum-processor",
+  }
+  substation_mk4.unit.count = 200
+  substation_mk4.unit.ingredients = {
+      {"automation-science-pack", 1},
+      {"logistic-science-pack", 1},
+      {"chemical-science-pack", 1},
+      {"production-science-pack", 1},
+      {"utility-science-pack", 1},
+      {"space-science-pack", 1},
+      {"electromagnetic-science-pack", 1},
+      {"cryogenic-science-pack", 1},
+  }
+  substation_mk4.unit.time = 45
+  substation_mk4.order = "c-e-b-7"
+  data:extend({substation_mk4})
+end

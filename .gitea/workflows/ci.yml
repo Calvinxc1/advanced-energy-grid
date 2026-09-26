@@ -173,3 +173,13 @@ jobs:
           ln -s "$PWD/src" "$mods_dir/$mod_name"
           ln -s "$PWD/tests/fixtures/aeg-power-overload-compatibility-test" "$mods_dir/aeg-power-overload-compatibility-test"
           FACTORIO_MODS_DIR="$mods_dir" AEG_REQUIRE_FACTORIO=1 ./scripts/factorio-validate.sh
+
+      - name: Validate with Krastorio 2 and Space Exploration
+        env:
+          FACTORIO_MOD_PORTAL_USERNAME: ${{ secrets.FACTORIO_MOD_PORTAL_USERNAME }}
+          FACTORIO_MOD_PORTAL_TOKEN: ${{ secrets.FACTORIO_MOD_PORTAL_TOKEN }}
+        # Spaced Out (Space Age on), Krastorio 2, Space Exploration, and SE
+        # with K2 (Space Age off), each with Power Overload and the pole
+        # registration assertions. The declared-dependency step above skips
+        # these overhauls because they bring hard requirements of their own.
+        run: ./scripts/validate-overhauls.sh

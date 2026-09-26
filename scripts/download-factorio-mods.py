@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 import urllib.error
@@ -38,6 +39,75 @@ def request_json(url: str) -> dict:
         raise DownloadError(f"Mod Portal API request failed: {error.reason}") from error
 
 
+BASE_DEPENDENCY_PATTERN = re.compile(
+    r"^\s*(?:[+?~]|\(\?\))?\s*base\s*(?P<operator><=|>=|<|>|=)\s*(?P<version>[0-9][0-9.]*)\s*$"
+)
+
+
+def version_tuple(version: str) -> tuple[int, ...]:
+    return tuple(int(part) for part in version.split(".") if part != "")
+
+
+def running_factorio_version() -> str | None:
+    """The version of the Factorio this download is being prepared for.
+
+    The CI image exports FACTORIO_VERSION, so that is preferred; otherwise the
+    binary is asked directly. Returns None when neither is available, in which
+    case release selection falls back to picking the newest in the series and
+    says so.
+    """
+    declared = os.environ.get("FACTORIO_VERSION")
+    if declared:
+        return declared.strip()
+
+    binary = os.environ.get("FACTORIO_BIN") or shutil.which("factorio")
+    if not binary or not os.access(binary, os.X_OK):
+        return None
+
+    try:
+        output = subprocess.run(
+            [binary, "--version"], capture_output=True, text=True, timeout=60, check=True
+        ).stdout
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+    match = re.search(r"Version:\s*([0-9][0-9.]*)", output)
+    return match.group(1) if match else None
+
+
+def base_requirement(info_json: dict) -> tuple[str, str] | None:
+    """The `base` version constraint a release declares, if any."""
+    for dependency in info_json.get("dependencies", []):
+        match = BASE_DEPENDENCY_PATTERN.match(dependency)
+        if match:
+            return match.group("operator"), match.group("version")
+    return None
+
+
+def release_loads_on(release: dict, factorio_version: str) -> bool:
+    requirement = base_requirement(release.get("info_json", {}))
+    if requirement is None:
+        return True
+
+    operator, required = requirement
+    try:
+        actual, wanted = version_tuple(factorio_version), version_tuple(required)
+    except ValueError:
+        # An unparseable version is not grounds for skipping a release; leave
+        # the judgement to Factorio, which will say so plainly if it objects.
+        return True
+
+    if operator == ">=":
+        return actual >= wanted
+    if operator == ">":
+        return actual > wanted
+    if operator == "<=":
+        return actual <= wanted
+    if operator == "<":
+        return actual < wanted
+    return actual == wanted
+
+
 def latest_compatible_release(mod_name: str, factorio_version: str) -> dict:
     response = request_json(f"{API_BASE_URL}/{urllib.parse.quote(mod_name, safe='')}/full")
     releases = [
@@ -47,7 +117,45 @@ def latest_compatible_release(mod_name: str, factorio_version: str) -> dict:
     ]
     if not releases:
         raise DownloadError(f"No Factorio {factorio_version} release found for {mod_name}")
-    return max(releases, key=lambda release: release.get("released_at", ""))
+
+    releases.sort(key=lambda release: release.get("released_at", ""), reverse=True)
+    newest = releases[0]
+
+    # The series in info_json.factorio_version ("2.1") says nothing about which
+    # patch releases a mod needs. A mod can require base >= 2.1.13 and still be
+    # a 2.1 release, so the newest in the series is not necessarily loadable on
+    # the Factorio actually installed. Selecting it anyway makes Factorio refuse
+    # the whole mod list before any of this mod's own code runs.
+    running = running_factorio_version()
+    if running is None:
+        print(
+            f"Factorio version unknown; selecting newest {factorio_version} release of "
+            f"{mod_name} without checking its base requirement",
+            file=sys.stderr,
+        )
+        return newest
+
+    for release in releases:
+        if release_loads_on(release, running):
+            if release is not newest:
+                requirement = base_requirement(newest.get("info_json", {}))
+                needed = f"{requirement[0]} {requirement[1]}" if requirement else "a newer base"
+                print(
+                    f"{mod_name}: newest {factorio_version} release "
+                    f"{newest.get('version')} needs base {needed} but Factorio is {running}; "
+                    f"using {release.get('version')} instead. "
+                    f"Update the CI image to test against the current release.",
+                    file=sys.stderr,
+                )
+            return release
+
+    requirement = base_requirement(newest.get("info_json", {}))
+    needed = f"{requirement[0]} {requirement[1]}" if requirement else "an unmet base version"
+    raise DownloadError(
+        f"No {factorio_version} release of {mod_name} loads on Factorio {running} "
+        f"(newest is {newest.get('version')}, needing base {needed}). "
+        f"Update the CI image to a Factorio that satisfies it."
+    )
 
 
 def dependency_names(info_json: dict, include_optional: bool) -> list[str]:
@@ -119,7 +227,25 @@ def archive_metadata(archive_path: Path) -> dict:
         raise DownloadError(f"Downloaded archive is not a valid ZIP: {archive_path.name}") from error
 
 
-def download_release(mod_name: str, release: dict, mods_dir: Path, username: str, token: str) -> None:
+def download_release(
+    mod_name: str,
+    release: dict,
+    mods_dir: Path,
+    username: str,
+    token: str,
+    cache_dir: Path | None = None,
+) -> None:
+    # With a cache, the archive is fetched into (or found in) the cache and
+    # linked into mods_dir, so several mods directories built from overlapping
+    # closures share one download of each release.
+    if cache_dir is not None and cache_dir.resolve() != mods_dir.resolve():
+        download_release(mod_name, release, cache_dir, username, token)
+        filename = Path(release.get("file_name", "")).name
+        destination = mods_dir / filename
+        if not destination.exists():
+            destination.symlink_to((cache_dir / filename).resolve())
+        return
+
     filename = Path(release.get("file_name", "")).name
     if not filename.endswith(".zip"):
         raise DownloadError(f"Mod Portal returned an invalid archive name for {mod_name}")
@@ -168,6 +294,7 @@ def download_mod_closure(
     token: str,
     completed: set[str],
     active_chain: list[str],
+    cache_dir: Path | None = None,
 ) -> None:
     if mod_name in completed:
         return
@@ -191,8 +318,9 @@ def download_mod_closure(
                     token=token,
                     completed=completed,
                     active_chain=active_chain,
+                    cache_dir=cache_dir,
                 )
-        download_release(mod_name, release, mods_dir, username, token)
+        download_release(mod_name, release, mods_dir, username, token, cache_dir)
         completed.add(mod_name)
     finally:
         active_chain.pop()
@@ -268,6 +396,11 @@ def parse_args() -> argparse.Namespace:
         help="Recursively download required and recommended Mod Portal dependencies.",
     )
     parser.add_argument(
+        "--cache-dir",
+        type=Path,
+        help="Keep downloaded archives here and link them into --mods-dir, reusing any already present.",
+    )
+    parser.add_argument(
         "--include-optional-dependencies",
         action="store_true",
         help="Include optional dependencies when used with --mod --with-dependencies.",
@@ -286,6 +419,8 @@ def main() -> int:
             "FACTORIO_MOD_PORTAL_USERNAME and FACTORIO_MOD_PORTAL_TOKEN must be set in the environment"
         )
     args.mods_dir.mkdir(parents=True, exist_ok=True)
+    if args.cache_dir:
+        args.cache_dir.mkdir(parents=True, exist_ok=True)
     if args.from_info:
         info = read_info_json(args.from_info)
         factorio_version = args.factorio_version or info.get("factorio_version", "2.1")
@@ -310,6 +445,7 @@ def main() -> int:
                 token=token,
                 completed=completed,
                 active_chain=[],
+                cache_dir=args.cache_dir,
             )
     return 0
 
