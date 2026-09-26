@@ -14,6 +14,10 @@ if optional_dependencies.has_power_overload then
     require("prototypes.electric.late-tiers.huge-poles.items")
     require(source .. ".huge-poles.recipes")
     require(source .. ".huge-poles.technologies")
+
+    if optional_dependencies.has_space_exploration then
+      require("prototypes.electric.space-exploration-updates")
+    end
   end
 end
 

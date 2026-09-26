@@ -39,20 +39,39 @@ elseif optional_dependencies.has_space_exploration then
   optional_dependencies.late_tier_source = "space-exploration"
 end
 
--- Tiers an overhaul already supplies. Krastorio 2's superior substation has the
--- substation mk4's reach and coverage, so under K2 it is that tier: the ladder
--- runs substation, mk2, mk3, superior substation, and K2's own technology
--- unlocks it. Everything that names a tier goes through name().
+-- Tiers an overhaul already supplies. Everything that names a tier goes
+-- through name().
+--
+--   * Krastorio 2's superior substation has the substation mk4's reach and
+--     coverage, so under K2 it is that tier: the ladder runs substation, mk2,
+--     mk3, superior substation, and K2's own technology unlocks it.
+--   * Space Exploration's pylon has the huge pole mk4's reach, arrives just
+--     after the mk3, and Power Overload gives it more capacity, so under SE it
+--     is that tier and SE's own technology unlocks it. Only the huge-pole
+--     ladder (which needs Power Overload) refers to it.
 local KRASTORIO2_TIERS = {
   ["aeg_substation-4"] = "kr-superior-substation",
   ["aeg_improved-local-energy-distribution-elite"] = "electric-energy-distribution-3",
 }
 
+local SPACE_EXPLORATION_TIERS = {
+  ["aeg_huge-electric-pole-4"] = "se-pylon",
+  ["aeg_improved-distance-power-transmission-elite"] = "se-pylon",
+}
+
 function optional_dependencies.name(prototype_name)
-  if optional_dependencies.has_krastorio2 then
-    return KRASTORIO2_TIERS[prototype_name] or prototype_name
+  if optional_dependencies.has_krastorio2 and KRASTORIO2_TIERS[prototype_name] then
+    return KRASTORIO2_TIERS[prototype_name]
+  end
+  if optional_dependencies.has_space_exploration and SPACE_EXPLORATION_TIERS[prototype_name] then
+    return SPACE_EXPLORATION_TIERS[prototype_name]
   end
   return prototype_name
+end
+
+-- Whether this mod builds a tier itself, or an overhaul supplies it.
+function optional_dependencies.builds(prototype_name)
+  return optional_dependencies.name(prototype_name) == prototype_name
 end
 
 -- Picks between a Space Age value and a base-game value. Used for technology

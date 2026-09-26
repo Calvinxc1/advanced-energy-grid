@@ -120,9 +120,10 @@ end
 --     them inherit. Space Exploration re-tiers Krastorio 2's
 --     materials and sets its costs in its own data-updates, so this runs
 --     after it.
---   * Under Krastorio 2 (with Space Age too), K2's technology for the
---     superior substation keeps K2's cost, but it now follows this mod's
---     substation mk3, so it inherits that tier's packs.
+--   * A tier an overhaul supplies keeps its overhaul technology's cost, but
+--     that technology now follows this mod's tier below, so it inherits that
+--     tier's packs: K2's superior substation (with Space Age too) and SE's
+--     pylon.
 --
 -- Numbered pack lines (SE's energy 1-4, material 1-4, ...) list only their
 -- highest tier, as the overhaul's own technologies do.
@@ -147,10 +148,14 @@ if not optional_dependencies.has_space_age
   end
 end
 
-local superior_name = optional_dependencies.name("aeg_improved-local-energy-distribution-elite")
-local superior = data.raw.technology[superior_name]
-if superior and superior.unit and string.sub(superior_name, 1, 4) ~= "aeg_" then
-  table.insert(gated, superior)
+for _, tier_technology in pairs({
+  "aeg_improved-local-energy-distribution-elite",
+  "aeg_improved-distance-power-transmission-elite",
+}) do
+  local supplied = data.raw.technology[optional_dependencies.name(tier_technology)]
+  if supplied and supplied.unit and not optional_dependencies.builds(tier_technology) then
+    table.insert(gated, supplied)
+  end
 end
 
 local function collapse(ingredients)

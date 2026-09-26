@@ -15,18 +15,3 @@ builders.technology({
   order = "c-e-c-a",
 })
 
-builders.technology({
-  name = "aeg_improved-distance-power-transmission-elite",
-  family = "huge",
-  recipe = "aeg_huge-electric-pole-4",
-  prerequisites = {
-    "aeg_improved-distance-power-transmission-advanced",
-    "se-superconductive-cable",
-    "se-quantum-processor",
-    "se-heavy-composite",
-  },
-  count = 1500,
-  ingredients = optional_dependencies.unit_ingredients("late"),
-  time = 45,
-  order = "c-e-c-a",
-})

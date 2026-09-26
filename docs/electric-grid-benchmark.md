@@ -48,6 +48,7 @@ Assumptions:
 ## Compatibility Notes
 
 - Space Age is optional. The big pole MK4, substation MK4, and huge pole MK3-MK4 exist under Space Age, Krastorio 2, or Space Exploration.
+- Under Space Exploration with Power Overload, the huge pole MK4 is SE's pylon (reach `64`, Power Overload limit `50GW` set by Power Overload itself), crafted from a huge pole MK3; the MK3 is the top of the upgrade chain there.
 - Under Krastorio 2 the vanilla poles keep the values in the table above, the substation MK4 is Krastorio 2's superior substation, and the Power Overload limits double from Krastorio 2's Tier 1 limits (for example big pole MK2-MK4 at `4GW`, `8GW`, `16GW`).
 - Power Overload is optional.
 - When Power Overload 2.2.0 or newer is installed, Advanced Energy Grid adds upgraded huge poles, adjusts the Tier 1 huge pole into the distance transmission branch, and registers AEG poles for overload limits.

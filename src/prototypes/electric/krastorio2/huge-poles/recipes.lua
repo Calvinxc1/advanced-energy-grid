@@ -1,5 +1,6 @@
 -- Huge pole mk3 and mk4 under Krastorio 2; the material mapping is described
--- in prototypes/electric/krastorio2/recipes.lua.
+-- in prototypes/electric/krastorio2/recipes.lua. With Space Exploration too,
+-- the mk4 is SE's pylon and the builders skip it.
 
 local builders = require("prototypes.electric.late-tiers.builders")
 local item = builders.item

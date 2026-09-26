@@ -52,6 +52,7 @@ The mod's reach and coverage numbers carry under an overhaul, while recipes and 
 - Krastorio 2 raises the vanilla poles' reach and coverage; they are set back to the first rung of each ladder, so every tier above them is still an upgrade. K2's recipes for them are kept.
 - Krastorio 2's superior substation is the substation MK4. Its recipe takes a substation MK3 in place of a substation, and its technology follows the substation MK3 technology.
 - Under Krastorio 2 the mk2 and mk3 tiers are built from K2's own intermediates, one new material per rung: steel beams at mk2, then rare metals, electronic components, and lithium-sulfur batteries at mk3. The late tiers use imersium beams, then the energy control unit, then the AI core. Under Space Exploration they use holmium cable, superconductive cable, heavy composite, and quantum processor. With both, Krastorio 2's materials are used and Space Exploration re-tiers them.
+- With Power Overload under Space Exploration, SE's pylon is the huge pole MK4: its recipe takes a huge pole MK3 and its technology follows the MK3 technology. It keeps SE's stats and menu row, and the upgrade planner stops at the MK3 because SE's space-capable poles cannot share an upgrade chain with ground poles. SE's pylon substation and construction pylon are built from a pylon, so they carry that cost too.
 - With Power Overload, which raises its own Tier 1 limits under Krastorio 2, each AEG tier keeps doubling the tier below, starting from the Krastorio 2 Tier 1 limit.
 
 ## Installation

@@ -3,6 +3,8 @@
 -- the same shapes out in full; the overhaul sources use these so each of their
 -- files is only the part that differs, the materials and the gates.
 
+local optional_dependencies = require("prototypes.electric.optional-dependencies")
+
 local builders = {}
 
 local TECHNOLOGY_ICONS = {
@@ -17,8 +19,12 @@ end
 builders.item = item
 
 -- A tier recipe, copied from the vanilla recipe of the same family so it keeps
--- the family's crafting time and category.
+-- the family's crafting time and category. A tier an overhaul supplies (see
+-- optional_dependencies.name) is not built.
 function builders.recipe(name, template, order, ingredients)
+  if not optional_dependencies.builds(name) then
+    return
+  end
   local recipe = util.table.deepcopy(data.raw.recipe[template])
   recipe.name = name
   recipe.enabled = false
@@ -32,6 +38,9 @@ end
 -- prerequisites need are added in data-updates, once the overhaul has settled
 -- its costs (prototypes/electric/technology-fixes.lua).
 function builders.technology(def)
+  if not optional_dependencies.builds(def.name) then
+    return
+  end
   data:extend({
     {
       type = "technology",

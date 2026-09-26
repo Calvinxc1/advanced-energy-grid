@@ -25,7 +25,10 @@ if optional_dependencies.has_power_overload then
   -- Every pole this mod adds in the load. Registering a pole that was never
   -- created would leave an orphan startup setting in Power Overload's
   -- settings UI with nothing behind it, so the late tiers are appended only
-  -- when they actually exist, under the name that tier has in this load.
+  -- when they actually exist, under the name that tier has in this load. A
+  -- tier an overhaul supplies is registered only where Power Overload does not
+  -- already know it: K2's superior substation (Power Overload's K2 table still
+  -- names it kr-substation-mk2) but not SE's pylon, which it registers itself.
   local aeg_poles = {
     {name = "aeg_small-electric-pole-2", family = "small", tier = 2},
 
@@ -47,11 +50,13 @@ if optional_dependencies.has_power_overload then
       {name = "aeg_big-electric-pole-4", family = "big", tier = 4},
       {name = optional_dependencies.name("aeg_substation-4"), family = "substation", tier = 4},
       {name = "aeg_huge-electric-pole-3", family = "huge", tier = 3},
-      {name = "aeg_huge-electric-pole-4", family = "huge", tier = 4},
+      {name = optional_dependencies.name("aeg_huge-electric-pole-4"), family = "huge", tier = 4},
     }
 
     for _, pole in pairs(late_poles) do
-      table.insert(aeg_poles, pole)
+      if pole.name ~= "se-pylon" then
+        table.insert(aeg_poles, pole)
+      end
     end
   end
 

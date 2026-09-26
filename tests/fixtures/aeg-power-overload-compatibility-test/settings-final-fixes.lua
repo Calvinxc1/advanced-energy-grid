@@ -81,6 +81,16 @@ else
   end
 end
 
+-- Under Space Exploration the huge pole mk4 is SE's pylon, which Power
+-- Overload registers itself.
+if mods["space-exploration"] then
+  expected_poles["aeg_huge-electric-pole-4"] = nil
+  assert(
+    registered_poles["aeg_huge-electric-pole-4"] == nil,
+    "Advanced Energy Grid registered aeg_huge-electric-pole-4 under Space Exploration, where SE's pylon is that tier"
+  )
+end
+
 if krastorio2 then
   assert(
     registered_poles["aeg_substation-4"] == nil,
