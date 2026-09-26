@@ -20,10 +20,10 @@
 -- The mk2 and mk3 tiers are built from K2's own intermediates, one new
 -- material per rung, so the ladder climbs through K2's progression rather than
 -- beside it: steel beams (K2's structural steel, as in its own poles) at mk2,
--- then rare metals (K2's conductor) and lithium-sulfur batteries at mk3. Only
--- the recipes change; each tier's reach and coverage stay the mod's. The
--- technologies pick up the K2 unlocks these need in
--- prototypes/electric/technology-fixes.lua.
+-- then rare metals (K2's conductor) at mk3, and lithium-sulfur batteries on
+-- the elite tier (medium pole mk4, substation mk3). Only the recipes change;
+-- each tier's reach and coverage stay the mod's. The technologies pick up the
+-- K2 unlocks these need in prototypes/electric/technology-fixes.lua.
 
 local name = require("prototypes.electric.optional-dependencies").name
 
@@ -90,6 +90,13 @@ local TIER_RECIPES = {
     ingredient("kr-rare-metals", 4),
     ingredient("low-density-structure", 1),
     ingredient("kr-steel-beam", 2),
+  },
+  ["aeg_medium-electric-pole-4"] = {
+    ingredient("aeg_medium-electric-pole-3", 1),
+    ingredient("kr-rare-metals", 2),
+    ingredient("kr-lithium-sulfur-battery", 1),
+    ingredient("processing-unit", 1),
+    ingredient("low-density-structure", 1),
   },
   ["aeg_substation-3"] = {
     ingredient("aeg_substation-2", 1),
