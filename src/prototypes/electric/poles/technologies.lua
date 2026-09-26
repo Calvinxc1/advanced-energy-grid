@@ -128,7 +128,7 @@ substation_mk3.prerequisites = {
     "aeg_local-energy-distribution-elite",
 }
 substation_mk3.unit.count = 200
-substation_mk3.unit.ingredients = optional_dependencies.electromagnetic_unit_ingredients()
+substation_mk3.unit.ingredients = optional_dependencies.unit_ingredients("elite")
 substation_mk3.unit.time = 45
 substation_mk3.order = "c-e-b-5"
 substation_mk3.upgrade = false
@@ -140,12 +140,11 @@ use_locale_and_icon(medium_pole_mk4, medium_pole_technology_icon)
 medium_pole_mk4.effects = {
     {type = "unlock-recipe", recipe = "aeg_medium-electric-pole-4"},
 }
-medium_pole_mk4.prerequisites = {
+medium_pole_mk4.prerequisites = optional_dependencies.prerequisites("elite", {
     "aeg_local-energy-distribution-advanced",
-    optional_dependencies.electromagnetic_prerequisite(),
-}
+})
 medium_pole_mk4.unit.count = 150
-medium_pole_mk4.unit.ingredients = optional_dependencies.electromagnetic_unit_ingredients()
+medium_pole_mk4.unit.ingredients = optional_dependencies.unit_ingredients("elite")
 medium_pole_mk4.unit.time = 30
 medium_pole_mk4.order = "c-e-b-6"
 medium_pole_mk4.upgrade = false

@@ -8,16 +8,17 @@ builders.technology({
   prerequisites = {
     "aeg_improved-distance-power-transmission-improved",
     "aeg_distance-power-transmission-elite",
+    "kr-energy-control-unit",
   },
   count = 1000,
-  ingredients = optional_dependencies.electromagnetic_unit_ingredients(),
+  ingredients = optional_dependencies.unit_ingredients("late"),
   time = 45,
   order = "c-e-c-a",
 })
 
 -- The Space Age mk4 follows cryogenic science alongside the substation mk4;
 -- here that is the advanced tech card, which unlocks K2's superior substation.
-local mk4_ingredients = optional_dependencies.electromagnetic_unit_ingredients()
+local mk4_ingredients = optional_dependencies.unit_ingredients("late")
 table.insert(mk4_ingredients, { "kr-advanced-tech-card", 1 })
 
 builders.technology({

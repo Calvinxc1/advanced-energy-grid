@@ -22,7 +22,7 @@ Vanilla electric poles cover most factory needs very early. This mod adds staged
 
 ### Late Tiers
 
-The big pole MK4, substation MK4, and huge pole MK3-MK4 are the late tiers. Under Space Age their recipes call for superconductor, foundation, and quantum processor; under Krastorio 2 or Space Exploration they use that overhaul's materials instead. Without any of these, those tiers do not exist. Every other tier, including the medium pole MK4, is available on base Factorio. Research that would otherwise need electromagnetic science is gated on space science in the base game, the matter tech card under Krastorio 2, and energy science 1 under Space Exploration.
+The big pole MK4, substation MK4, and huge pole MK3-MK4 are the late tiers. Under Space Age their recipes call for superconductor, foundation, and quantum processor; under Krastorio 2 or Space Exploration they use that overhaul's materials instead. Without any of these, those tiers do not exist. Every other tier, including the medium pole MK4, is available on base Factorio. Research that would otherwise need electromagnetic science is gated on space science in the base game and energy science 1 under Space Exploration. Krastorio 2 splits that gate in two: the medium pole MK4, substation MK3, and huge pole MK2 follow lithium-sulfur batteries and rare metals, and the big pole MK4 and huge pole MK3-MK4 follow the matter tech card.
 
 ## Companion Mods
 
@@ -51,7 +51,7 @@ The mod's reach and coverage numbers carry under an overhaul, while recipes and 
 
 - Krastorio 2 raises the vanilla poles' reach and coverage; they are set back to the first rung of each ladder, so every tier above them is still an upgrade. K2's recipes for them are kept.
 - Krastorio 2's superior substation is the substation MK4. Its recipe takes a substation MK3 in place of a substation, and its technology follows the substation MK3 technology.
-- Under Krastorio 2 the late tiers use the energy control unit, imersium beam, and AI core. Under Space Exploration they use holmium cable, superconductive cable, heavy composite, and quantum processor. With both, Krastorio 2's materials are used and Space Exploration re-tiers them.
+- Under Krastorio 2 the mk2 and mk3 tiers are built from K2's own intermediates, one new material per rung: steel beams at mk2, then rare metals, electronic components, and lithium-sulfur batteries at mk3. The late tiers use imersium beams, then the energy control unit, then the AI core. Under Space Exploration they use holmium cable, superconductive cable, heavy composite, and quantum processor. With both, Krastorio 2's materials are used and Space Exploration re-tiers them.
 - With Power Overload, which raises its own Tier 1 limits under Krastorio 2, each AEG tier keeps doubling the tier below, starting from the Krastorio 2 Tier 1 limit.
 
 ## Installation

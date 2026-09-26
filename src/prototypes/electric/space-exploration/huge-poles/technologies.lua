@@ -10,7 +10,7 @@ builders.technology({
     "aeg_distance-power-transmission-elite",
   },
   count = 1000,
-  ingredients = optional_dependencies.electromagnetic_unit_ingredients(),
+  ingredients = optional_dependencies.unit_ingredients("late"),
   time = 45,
   order = "c-e-c-a",
 })
@@ -26,7 +26,7 @@ builders.technology({
     "se-heavy-composite",
   },
   count = 1500,
-  ingredients = optional_dependencies.electromagnetic_unit_ingredients(),
+  ingredients = optional_dependencies.unit_ingredients("late"),
   time = 45,
   order = "c-e-c-a",
 })

@@ -16,6 +16,14 @@
 -- prototypes/electric/poles/entities.lua, which runs after K2's data stage.
 -- K2 changes the vanilla poles' reach and coverage in its data-updates; they
 -- are set back in prototypes/electric/krastorio2-updates.lua.
+--
+-- The mk2 and mk3 tiers are built from K2's own intermediates, one new
+-- material per rung, so the ladder climbs through K2's progression rather than
+-- beside it: steel beams (K2's structural steel, as in its own poles) at mk2,
+-- then rare metals (K2's conductor) and lithium-sulfur batteries at mk3. Only
+-- the recipes change; each tier's reach and coverage stay the mod's. The
+-- technologies pick up the K2 unlocks these need in
+-- prototypes/electric/technology-fixes.lua.
 
 local name = require("prototypes.electric.optional-dependencies").name
 
@@ -48,4 +56,51 @@ end
 if technology then
   technology.prerequisites = technology.prerequisites or {}
   table.insert(technology.prerequisites, "aeg_improved-local-energy-distribution-advanced")
+end
+
+local function ingredient(item_name, amount)
+  return { type = "item", name = item_name, amount = amount }
+end
+
+local TIER_RECIPES = {
+  ["aeg_medium-electric-pole-2"] = {
+    ingredient("medium-electric-pole", 1),
+    ingredient("kr-steel-beam", 2),
+    ingredient("copper-cable", 4),
+  },
+  ["aeg_big-electric-pole-2"] = {
+    ingredient("big-electric-pole", 1),
+    ingredient("kr-steel-beam", 3),
+    ingredient("copper-cable", 6),
+  },
+  ["aeg_substation-2"] = {
+    ingredient("substation", 1),
+    ingredient("kr-steel-beam", 4),
+    ingredient("advanced-circuit", 2),
+    ingredient("kr-electronic-components", 2),
+  },
+  ["aeg_medium-electric-pole-3"] = {
+    ingredient("aeg_medium-electric-pole-2", 1),
+    ingredient("kr-rare-metals", 2),
+    ingredient("advanced-circuit", 1),
+    ingredient("kr-electronic-components", 2),
+  },
+  ["aeg_big-electric-pole-3"] = {
+    ingredient("aeg_big-electric-pole-2", 1),
+    ingredient("kr-rare-metals", 4),
+    ingredient("low-density-structure", 1),
+    ingredient("kr-steel-beam", 2),
+  },
+  ["aeg_substation-3"] = {
+    ingredient("aeg_substation-2", 1),
+    ingredient("kr-rare-metals", 4),
+    ingredient("processing-unit", 2),
+    ingredient("kr-lithium-sulfur-battery", 2),
+  },
+}
+
+for recipe_name, ingredients in pairs(TIER_RECIPES) do
+  if data.raw.recipe[recipe_name] then
+    data.raw.recipe[recipe_name].ingredients = ingredients
+  end
 end

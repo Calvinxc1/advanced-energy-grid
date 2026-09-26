@@ -23,6 +23,21 @@ for pole_name, stats in pairs(FIRST_RUNG) do
   end
 end
 
+-- The huge pole mk2 follows the big pole mk3 onto rare metals and steel
+-- beams (see prototypes/electric/krastorio2.lua). It only exists with Power
+-- Overload, whose huge pole this mod copies in data-updates, so its recipe is
+-- set here rather than with the other tiers.
+local huge_pole_mk2 = data.raw.recipe["aeg_huge-electric-pole-2"]
+if huge_pole_mk2 then
+  huge_pole_mk2.ingredients = {
+    { type = "item", name = "po-huge-electric-pole", amount = 1 },
+    { type = "item", name = "kr-steel-beam", amount = 8 },
+    { type = "item", name = "iron-stick", amount = 20 },
+    { type = "item", name = "advanced-circuit", amount = 10 },
+    { type = "item", name = "kr-rare-metals", amount = 10 },
+  }
+end
+
 -- K2's tech cards pass along this mod's chains: each of its technologies takes
 -- the cards its prerequisites carry, repeated until nothing changes. Krastorio
 -- 2 Spaced Out adds cards to Space Age technologies in its data-updates, so a

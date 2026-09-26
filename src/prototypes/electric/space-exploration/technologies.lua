@@ -10,7 +10,7 @@ builders.technology({
     "se-holmium-cable",
   },
   count = 150,
-  ingredients = optional_dependencies.electromagnetic_unit_ingredients(),
+  ingredients = optional_dependencies.unit_ingredients("late"),
   time = 30,
   order = "c-e-c-6",
 })
@@ -25,7 +25,7 @@ builders.technology({
     "se-quantum-processor",
   },
   count = 200,
-  ingredients = optional_dependencies.electromagnetic_unit_ingredients(),
+  ingredients = optional_dependencies.unit_ingredients("late"),
   time = 45,
   order = "c-e-b-7",
 })

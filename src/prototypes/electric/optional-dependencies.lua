@@ -66,17 +66,26 @@ function optional_dependencies.select(space_age, fallback)
   return fallback
 end
 
--- The science pack, and the technology that unlocks it, that gates the elite
--- tiers (medium pole mk4, substation mk3, huge pole mk2, and the late tiers
--- above them):
+-- The research gates above utility science. Two stages:
 --
---   Space Age            electromagnetic science (Fulgora)
---   Space Exploration    energy science 1, SE's own electrical line, where its
---                        pylons and holmium cable sit
---   Krastorio 2          the matter tech card, where K2 puts imersium and the
---                        superior substation's materials
---   base game            space science, the base game's capstone
-local ELITE_PACKS = {
+--   elite  medium pole mk4, substation mk3, huge pole mk2
+--   late   big pole mk4, huge pole mk3 (and, with a further pack, the mk4
+--          substation and huge pole)
+--
+--                        elite                          late
+--   Space Age            electromagnetic science        (same)
+--   Space Exploration    energy science 1, SE's own     (same)
+--                        electrical line
+--   Krastorio 2          lithium-sulfur battery and     matter tech card, where
+--                        rare metals, K2's late          K2 puts imersium and
+--                        pre-rocket content              the energy control unit
+--   base game            space science                  (same)
+--
+-- Only Krastorio 2 separates them: its matter card comes after the singularity
+-- lab, so gating the elite tier there would leave the whole rocket-to-matter
+-- stretch without a pole upgrade. Each gate is a set of technologies to follow
+-- and a set of packs to add to the research unit.
+local BASE_PACKS = {
   { "automation-science-pack", 1 },
   { "logistic-science-pack", 1 },
   { "chemical-science-pack", 1 },
@@ -84,31 +93,45 @@ local ELITE_PACKS = {
   { "utility-science-pack", 1 },
 }
 
-local function elite_gate()
+local function gate(stage)
   if optional_dependencies.has_space_age then
-    return { "space-science-pack", "electromagnetic-science-pack" }
+    return { technologies = { "electromagnetic-science-pack" },
+             packs = { "space-science-pack", "electromagnetic-science-pack" } }
   elseif optional_dependencies.has_space_exploration then
-    return { "space-science-pack", "se-rocket-science-pack", "se-energy-science-pack-1" }
+    return { technologies = { "se-energy-science-pack-1" },
+             packs = { "space-science-pack", "se-rocket-science-pack", "se-energy-science-pack-1" } }
   elseif optional_dependencies.has_krastorio2 then
-    return { "kr-matter-tech-card" }
+    if stage == "elite" then
+      return { technologies = { "kr-lithium-sulfur-battery", "kr-rare-metal-processing" }, packs = {} }
+    end
+    return { technologies = { "kr-matter-tech-card" }, packs = { "kr-matter-tech-card" } }
   end
-  return { "space-science-pack" }
+  return { technologies = { "space-science-pack" }, packs = { "space-science-pack" } }
 end
 
--- The research unit shared by every elite tier.
-function optional_dependencies.electromagnetic_unit_ingredients()
-  local ingredients = util.table.deepcopy(ELITE_PACKS)
-  for _, pack in pairs(elite_gate()) do
+-- The research unit for a stage ("elite" or "late").
+function optional_dependencies.unit_ingredients(stage)
+  local ingredients = util.table.deepcopy(BASE_PACKS)
+  for _, pack in pairs(gate(stage).packs) do
     table.insert(ingredients, { pack, 1 })
   end
   return ingredients
 end
 
--- The technology that gates an elite tier: the one that unlocks the last
--- pack in the elite research unit.
-function optional_dependencies.electromagnetic_prerequisite()
-  local gate = elite_gate()
-  return gate[#gate]
+-- A technology's prerequisites: its own, followed by the stage's gate.
+function optional_dependencies.prerequisites(stage, own)
+  local prerequisites = util.table.deepcopy(own)
+  for _, technology in pairs(gate(stage).technologies) do
+    table.insert(prerequisites, technology)
+  end
+  return prerequisites
+end
+
+-- The pack that marks a technology as at or beyond the late gate, if the gate
+-- adds one.
+function optional_dependencies.late_gate_pack()
+  local packs = gate("late").packs
+  return packs[#packs]
 end
 
 return optional_dependencies

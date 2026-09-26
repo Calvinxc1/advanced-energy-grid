@@ -17,8 +17,10 @@ if optional_dependencies.has_power_overload then
   end
 end
 
-require("prototypes.electric.technology-fixes")
-
 if optional_dependencies.has_krastorio2 then
   require("prototypes.electric.krastorio2-updates")
 end
+
+-- After every recipe is final, so each technology can pick up the unlocks
+-- its ingredients need.
+require("prototypes.electric.technology-fixes")

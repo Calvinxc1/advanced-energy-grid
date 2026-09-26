@@ -14,21 +14,16 @@ local function add_prerequisite(technology, prerequisite_name)
   table.insert(technology.prerequisites, prerequisite_name)
 end
 
-local function unlocking_technology(recipe_name)
-  for technology_name, technology in pairs(data.raw.technology) do
-    for _, effect in pairs(technology.effects or {}) do
-      if effect.type == "unlock-recipe" and effect.recipe == recipe_name then
-        return technology_name
-      end
+local function unlocks(technology_name)
+  local recipes = {}
+  for _, effect in pairs(data.raw.technology[technology_name].effects or {}) do
+    if effect.type == "unlock-recipe" then
+      table.insert(recipes, effect.recipe)
     end
   end
+  return recipes
 end
 
--- The small pole mk2 is made from electronic circuits, so its technology waits
--- on whichever technology unlocks them, unless it already does. In the base
--- game that one comes before logistic science anyway; Space Exploration moves
--- it off that path, and without this the mk2 could be researched before its
--- ingredient.
 local function requires(technology, ancestor_name, visited)
   visited = visited or {}
   for _, prerequisite_name in pairs(technology.prerequisites or {}) do
@@ -46,17 +41,83 @@ local function requires(technology, ancestor_name, visited)
   return false
 end
 
-local small_pole_mk2 = data.raw.technology["aeg_improved-electric-poles"]
-local circuits = unlocking_technology("electronic-circuit")
-if small_pole_mk2 and circuits and not requires(small_pole_mk2, circuits) then
-  add_prerequisite(small_pole_mk2, circuits)
+-- Every recipe that produces an item, and the technologies that unlock each
+-- recipe. Hidden recipes are not a way to make anything: Space Age's
+-- recycling recipes, for one, return a lithium-sulfur battery from anything
+-- built with one, and recycling comes before electromagnetic science.
+local producers, unlockers = {}, {}
+for recipe_name, recipe in pairs(data.raw.recipe) do
+  for _, result in pairs(not recipe.hidden and recipe.results or {}) do
+    if result.name then
+      producers[result.name] = producers[result.name] or {}
+      table.insert(producers[result.name], recipe_name)
+    end
+  end
+end
+for technology_name, technology in pairs(data.raw.technology) do
+  for _, effect in pairs(technology.effects or {}) do
+    if effect.type == "unlock-recipe" then
+      unlockers[effect.recipe] = unlockers[effect.recipe] or {}
+      table.insert(unlockers[effect.recipe], technology_name)
+    end
+  end
+end
+
+-- The technology to wait on for an ingredient, or nil when the technology
+-- already can make it: some recipe for it is enabled from the start or
+-- unlocked by this technology or one it requires, or nothing crafts it at all
+-- (a mined resource). Otherwise it is the technology unlocking the recipe
+-- named after the item, as overhauls name their main recipe, provided that
+-- technology does not itself come after this one.
+local function missing_unlock(technology_name, item_name)
+  local recipes = producers[item_name]
+  if not recipes then
+    return nil
+  end
+  local technology = data.raw.technology[technology_name]
+  for _, recipe_name in pairs(recipes) do
+    local recipe = data.raw.recipe[recipe_name]
+    local unlocked_by = unlockers[recipe_name] or {}
+    if #unlocked_by == 0 and recipe.enabled ~= false then
+      return nil
+    end
+    for _, unlocker in pairs(unlocked_by) do
+      if unlocker == technology_name or requires(technology, unlocker) then
+        return nil
+      end
+    end
+  end
+  local main = unlockers[item_name] and unlockers[item_name][1]
+  if main and not requires(data.raw.technology[main], technology_name) then
+    return main
+  end
+  return nil
+end
+
+-- Each of this mod's technologies waits on whatever unlocks its recipes'
+-- ingredients, unless it already does. The base game and Space Age need
+-- nothing here; Space Exploration moves electronic circuits off the path to
+-- logistic science, and Krastorio 2's rare metals, lithium-sulfur batteries
+-- and electronic components come from its own technologies.
+for technology_name, technology in pairs(data.raw.technology) do
+  if string.sub(technology_name, 1, 4) == "aeg_" then
+    for _, recipe_name in pairs(unlocks(technology_name)) do
+      local recipe = data.raw.recipe[recipe_name]
+      for _, ingredient in pairs(recipe and recipe.ingredients or {}) do
+        local unlocker = missing_unlock(technology_name, ingredient.name)
+        if unlocker then
+          add_prerequisite(technology, unlocker)
+        end
+      end
+    end
+  end
 end
 
 -- Under an overhaul, a tier never researches for less than what it builds on:
 -- it takes every pack its prerequisites need, as well as its own gate.
 --
---   * Without Space Age, the elite and late tiers list only their own gate,
---     so all of them inherit. Space Exploration re-tiers Krastorio 2's
+--   * Without Space Age, the late tiers list only their own gate, so all of
+--     them inherit. Space Exploration re-tiers Krastorio 2's
 --     materials and sets its costs in its own data-updates, so this runs
 --     after it.
 --   * Under Krastorio 2 (with Space Age too), K2's technology for the
@@ -73,7 +134,7 @@ local gated = {}
 
 if not optional_dependencies.has_space_age
     and (optional_dependencies.has_krastorio2 or optional_dependencies.has_space_exploration) then
-  local gate = optional_dependencies.electromagnetic_prerequisite()
+  local gate = optional_dependencies.late_gate_pack()
   for technology_name, technology in pairs(data.raw.technology) do
     if string.sub(technology_name, 1, 4) == "aeg_" then
       for _, ingredient in pairs(technology.unit and technology.unit.ingredients or {}) do

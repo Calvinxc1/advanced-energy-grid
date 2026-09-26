@@ -38,14 +38,13 @@ use_huge_pole_icon(huge_pole_mk2_tech)
 huge_pole_mk2_tech.effects = {
   { type = "unlock-recipe", recipe = "aeg_huge-electric-pole-2" },
 }
-huge_pole_mk2_tech.prerequisites = {
+huge_pole_mk2_tech.prerequisites = optional_dependencies.prerequisites("elite", {
   "po-electric-energy-distribution-3",
   "aeg_distance-power-transmission-advanced",
-  optional_dependencies.electromagnetic_prerequisite(),
-}
+})
 huge_pole_mk2_tech.unit = {
   count = 750,
-  ingredients = optional_dependencies.electromagnetic_unit_ingredients(),
+  ingredients = optional_dependencies.unit_ingredients("elite"),
   time = 45,
 }
 huge_pole_mk2_tech.order = "c-e-c-a"
